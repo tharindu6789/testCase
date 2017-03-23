@@ -15,4 +15,6 @@ public interface ProjectService {
 	ArrayList<String> GenerateTestCase(String paragraph);
 
 	List<Project> getAllData();
+	
+	public ArrayList<String> getPrequisite(String paragraph);
 }

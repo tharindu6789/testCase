@@ -66,5 +66,16 @@ dao.save(project);
 		}
 		return testCaseList;
 	}
+	public ArrayList<String> getPrequisite(String paragraph) {
+		ArrayList<String> prelist=new ArrayList<String>();
+		
+		try {
+			prelist=new PrerequisiteRules().prerequisteValidate(paragraph);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return prelist;
+	}
 
 }
