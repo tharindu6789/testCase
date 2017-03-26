@@ -77,5 +77,27 @@ dao.save(project);
 		}
 		return prelist;
 	}
+	public ArrayList<String> getDescription(String paragraph) {
+		ArrayList<String> prelist=new ArrayList<String>();
+		
+		try {
+			prelist=new TestDescRules().descValidate(paragraph);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return prelist;
+	}
+	public ArrayList<String> getSentByRule(String rule,String paragraph) {
+		ArrayList<String> prelist=new ArrayList<String>();
+		
+		try {
+			prelist=new Rules().validate(rule, paragraph);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return prelist;
+	}
 
 }

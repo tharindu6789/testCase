@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.testcase.constant.TestDesc_constant;
+
 import opennlp.tools.cmdline.postag.POSModelLoader;
 import opennlp.tools.postag.POSModel;
 import opennlp.tools.postag.POSTagger;
@@ -16,23 +18,21 @@ import opennlp.tools.postag.POSTaggerME;
 import opennlp.tools.sentdetect.SentenceDetectorME;
 import opennlp.tools.sentdetect.SentenceModel;
 import opennlp.tools.tokenize.WhitespaceTokenizer;
-import com.testcase.constant.Prerequisite_constant;
-public class PrerequisiteRules {
-	
-	static String path = "C:\\Users\\Admin\\git\\testCase\\resources\\";
-	static Map<String, Integer> predefinedMap;
-	static Map<String, Integer> predefinedPriority;
-	static List<String> predList;
-	
-	public PrerequisiteRules() {
-		predefinedMap = Prerequisite_constant.predefinedPriority();
-		predList = Prerequisite_constant.predeifnedList();
-		predefinedPriority=Prerequisite_constant.predefinedPriority();
+
+public class TestDescRules {
+	static String path = "D:\\Test case pro\\DesignPlus v1.4\\src\\";
+	static List<String> descList;
+	static Map<String, Integer> descPriority;
+
+
+	public TestDescRules() {
+		//predefinedMap = constant.predeifned();
+		descList = TestDesc_constant.descList();
+		descPriority=TestDesc_constant.descPriority();
 	}
-
-	public ArrayList<String>  prerequisteValidate(String paragraph) {
+	
+	public ArrayList<String>  descValidate(String paragraph) {
 		// String path="D:\\Test case pro\\DesignPlus v1.4\\src\\";
-
 		String DIR_PATH = "opennlp/";
 		String POS_MODEL_FILE = "en-pos-maxent.zip";
 
@@ -74,37 +74,31 @@ public class PrerequisiteRules {
 					for (String sentence : sentences) {
 						// System.out.println("Sentence : " + sentence);
 					}
-
-					 preList = new PrerequisiteRules().Rule1(sentences, tagger);
-
-					System.out.println(preList.size());
-					if (preList.size() != 1) {
-						ArrayList<String> ruleList2 = new PrerequisiteRules().Rule2(preList, tagger);
-						preList.clear();
-						preList.addAll(ruleList2);
-						System.out.println("2:"+preList.size());
-
-						if (preList.size() > 1) {
-							ArrayList<String> ruleList3 = new PrerequisiteRules().Rule3(preList, tagger);
-							preList.clear();
-							preList.addAll(ruleList3);
-							 System.out.println("3: "+ruleList3.size());
-
-							if (preList.size() > 1) {
-								ArrayList<String> ruleList4 = new PrerequisiteRules().Rule4(preList, tagger);
-								preList.clear();
-								preList.addAll(ruleList4);
-								 System.out.println("4: "+preList.size());
-								 if(preList.size() > 1){
-									 ArrayList<String> ruleList5 = new PrerequisiteRules().Rule5(preList, tagger);
-										preList.clear();
-										preList.addAll(ruleList5);
-										System.out.println("5: "+ruleList5.size());
+					 preList = new TestDescRules().Rule1(sentences, tagger);
+					 	
+					 if(preList.size() >1){
+						 ArrayList<String> ruleList2= new TestDescRules().Rule2(preList, tagger);
+						 preList.clear();
+						 preList.addAll(ruleList2);
+						 
+						 if(preList.size()>1){
+							 ArrayList<String> ruleList3= new TestDescRules().Rule3(preList, tagger);
+							 preList.clear();
+							 preList.addAll(ruleList3);
+							 if(preList.size()>1){
+								 ArrayList<String> ruleList4= new TestDescRules().Rule4(preList, tagger);
+								 preList.clear();
+								 preList.addAll(ruleList4);
+								 if(preList.size()>1){
+									 ArrayList<String> ruleList5= new TestDescRules().Rule5(preList, tagger);
+									 preList.clear();
+									 preList.addAll(ruleList5);								 
 								 }
-							}
-							
-						}
-					}
+							 }
+						 }
+					 }
+					
+					
 
 				}
 				tagger = null;
@@ -115,7 +109,7 @@ public class PrerequisiteRules {
 		return preList;
 
 	}
-
+	
 	public ArrayList<String> Rule1(String[] sentences, POSTaggerME tagger) {
 		ArrayList<String> ruleList = new ArrayList<String>();
 		for (String sentence : sentences) {
@@ -125,10 +119,9 @@ public class PrerequisiteRules {
 				String word = whitespaceTokenizerLine[i].trim();
 				String tag = tags[i].trim();
 				//System.out.println(sentence+" : "+word+"/"+tag);
-				if (predList.contains(word + "/" + tag)) {
+				if (descList.contains(word + "/" + tag)) {
 					if (ruleList.size() == 0 || !ruleList.contains(sentence)) {
 						ruleList.add(sentence);
-						// System.out.println("T :"+sentence);
 					}
 				} else {
 					// System.out.println(word + ":" + tag);
@@ -150,7 +143,7 @@ public class PrerequisiteRules {
 				String word = whitespaceTokenizerLine[i].trim();
 				String tag = tags[i].trim();
 				System.out.println(word+"_"+tag);
-				if (predList.contains(word + "/" + tag)) {
+				if (descList.contains(word + "/" + tag)) {
 					if (freqs.containsKey(word.toLowerCase())) {
 						freqs.put(word.toLowerCase(), freqs.get(word.toLowerCase()) + 1);
 					} else {
@@ -190,12 +183,12 @@ public class PrerequisiteRules {
 			for (int i = 0; i < whitespaceTokenizerLine.length; i++) {
 				String word = whitespaceTokenizerLine[i].trim();
 				String tag = tags[i].trim();
-				if (predefinedPriority.containsKey(word+"/"+tag)) {
+				if (descPriority.containsKey(word+"/"+tag)) {
 					if (freqs.containsKey(word.toLowerCase())) {
 						freqs.put(word.toLowerCase(),
-								freqs.get(word.toLowerCase()) + predefinedPriority.get(word+"/"+tag));
+								freqs.get(word.toLowerCase()) + descPriority.get(word+"/"+tag));
 					} else {
-						freqs.put(word.toLowerCase(), predefinedPriority.get(word+"/"+tag));
+						freqs.put(word.toLowerCase(), descPriority.get(word+"/"+tag));
 					}
 				} else {
 					// freqs.put(token.toLowerCase(), 1);
@@ -232,18 +225,18 @@ public class PrerequisiteRules {
 				String word = whitespaceTokenizerLine[i].trim();
 				// if(tags[i].equalsIgnoreCase("MD") &&
 				// tags[i+1].equalsIgnoreCase("VB")){
-				if (predefinedMap.containsKey(word + "/" + tags[i + 1])) {
+				if (descPriority.containsKey(word + "/" + tags[i + 1])) {
 					if (freqs.containsKey(sent)) {
-						freqs.put(sent, freqs.get(sent) + predefinedMap.get(word + "/" + tags[i + 1]));
+						freqs.put(sent, freqs.get(sent) + descPriority.get(word + "/" + tags[i + 1]));
 					} else {
-						freqs.put(sent, predefinedMap.get(word + "/" + tags[i + 1]));
+						freqs.put(sent, descPriority.get(word + "/" + tags[i + 1]));
 					}
 				}
-				if (predefinedMap.containsKey(tags[i] + "/" + tags[i + 1])) {
+				if (descPriority.containsKey(tags[i] + "/" + tags[i + 1])) {
 					if (freqs.containsKey(sent)) {
-						freqs.put(sent, freqs.get(sent) + predefinedMap.get(tags[i] + "/" + tags[i + 1]));
+						freqs.put(sent, freqs.get(sent) + descPriority.get(tags[i] + "/" + tags[i + 1]));
 					} else {
-						freqs.put(sent, predefinedMap.get(tags[i] + "/" + tags[i + 1]));
+						freqs.put(sent, descPriority.get(tags[i] + "/" + tags[i + 1]));
 					}
 				}
 				// }
@@ -276,18 +269,18 @@ public class PrerequisiteRules {
 			for (int i = 1; i < whitespaceTokenizerLine.length; i++) {
 				String word = whitespaceTokenizerLine[i-1].trim();
 				 
-				if (predefinedMap.containsKey(word + "/" + tags[i])) {
+				if (descPriority.containsKey(word + "/" + tags[i])) {
 					if (freqs.containsKey(sent)) {
-						freqs.put(sent, freqs.get(sent) + predefinedMap.get(word + "/" + tags[i]));
+						freqs.put(sent, freqs.get(sent) + descPriority.get(word + "/" + tags[i]));
 					} else {
-						freqs.put(sent, predefinedMap.get(word + "/" + tags[i ]));
+						freqs.put(sent, descPriority.get(word + "/" + tags[i ]));
 					}
 				}
-				if (predefinedMap.containsKey(tags[i] + "/" + tags[i])) {
+				if (descPriority.containsKey(tags[i] + "/" + tags[i])) {
 					if (freqs.containsKey(sent)) {
-						freqs.put(sent, freqs.get(sent) + predefinedMap.get(tags[i] + "/" + tags[i]));
+						freqs.put(sent, freqs.get(sent) + descPriority.get(tags[i] + "/" + tags[i]));
 					} else {
-						freqs.put(sent, predefinedMap.get(tags[i] + "/" + tags[i]));
+						freqs.put(sent, descPriority.get(tags[i] + "/" + tags[i]));
 					}
 				}
 

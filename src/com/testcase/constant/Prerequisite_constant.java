@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class Prerequisite_constant {
 
-	public static List<String> predList(){
+	public static List<String> predeifnedList(){
 		
 		List<String> x = new ArrayList<String>(Arrays.asList(
 				"Prerequisite/VB", "prerequisite/NNP","pre-requisite/NN"				
@@ -31,7 +31,7 @@ public class Prerequisite_constant {
 	}
 
 	
-	public static Map<String,Integer> predeifned(){// rule4 & 5 (before & after)
+	public static Map<String,Integer> predefinedPriority(){// rule4 & 5 (before & after)
 	final Map<String,Integer> predefinedMap = new HashMap<String, Integer>();
 	
 	predefinedMap.put("Must/VB", 1);  // prerequisite is predefined verb(VB)

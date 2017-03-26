@@ -152,7 +152,7 @@ public class ProjectController {
 		return new ResponseEntity<ArrayList<ArrayList<String>>>(testListAll, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/project_prerequisite/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/testcase_prerequisite/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ArrayList<ArrayList<String>>> getPrerequisite(@PathVariable("id") int id) {
 		System.out.println("get Prerequite " + id);
 
@@ -184,4 +184,37 @@ public class ProjectController {
 
 		return new ResponseEntity<ArrayList<ArrayList<String>>>(preListAll, HttpStatus.OK);
 	}
+	@RequestMapping(value = "/testcase_rule/{rule}/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ArrayList<ArrayList<String>>> getSentByRule(@PathVariable("rule") String rule,@PathVariable("id") int id) {
+		System.out.println("get Prerequite" + id);
+
+		Project current = new Project();
+		current = projectService.findById(id);
+		if (current == null) {
+			System.out.println("Project with id " + id + " not found");
+			return new ResponseEntity<ArrayList<ArrayList<String>>>(HttpStatus.NOT_FOUND);
+		}
+		String paragraphs = current.getFunc_require();
+		String[] scenes = paragraphs.split("\\r?\\n");
+
+		ArrayList<ArrayList<String>> preListAll = new ArrayList<ArrayList<String>>();
+
+		for (int i = 0; i < scenes.length; i++) {
+			ArrayList<String> preList = new ArrayList<String>();
+			System.out.println("scen" + i + ":" + scenes);
+			preList = projectService.getSentByRule(rule,scenes[i]);// pass the spilt
+																// paragraph
+
+			System.out.println("TESTCASE" + i + preList);
+
+			Set<String> hs = new LinkedHashSet<>(preList);
+			// hs.addAll(testList);
+			preList.clear();
+			preList.addAll(hs);
+			preListAll.add(preList);
+		}
+
+		return new ResponseEntity<ArrayList<ArrayList<String>>>(preListAll, HttpStatus.OK);
+	}
+	
 }

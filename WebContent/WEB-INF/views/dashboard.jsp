@@ -580,9 +580,25 @@ $("body").on("click","#generateBtn",function(e){
 			 $("#prerequisite").text(prerequisite);
 			 $("#alternative").text(alternative);
 			 $("#expected_result").text(expected_result);
-			 var htm="<li><span><i class='icon-minus-sign'></i>Test Suite 1</span>"+
-	                  "<ul><li><span><i class='icon-leaf'></i> Test Case1</span></li></ul> </li>";
-			 $("#F"+id).append(htm);
+			 
+			 var test_suite="";
+			 
+			 $.ajax({
+				 url:base_url+'testcase_rule/tc_description/'+id,
+				 type:"GET",
+				 dataType:'json',
+				 contentType:'application/json',
+				 success:function(data){
+					 alert(data[0]);
+					var	test_suite=data[0];
+					var htm="<li><span><i class='icon-minus-sign'></i>"+test_suite+"</span>"+
+	                 "<ul><li><span><i class='icon-leaf'></i> Test Case1</span></li></ul> </li>";
+			 $("#F"+id).append(htm); 
+				 }
+			 });
+			
+			
+			 
 			for(i=4; i<data[0].length;i++){
 				$("#test_body").append("<tr><td>"+Number(i-3)+"</td><td>"+data[0][i]+"</td>");
 			}
