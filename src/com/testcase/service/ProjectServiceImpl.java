@@ -2,7 +2,9 @@ package com.testcase.service;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -88,16 +90,27 @@ dao.save(project);
 		}
 		return prelist;
 	}
-	public ArrayList<String> getSentByRule(String rule,String paragraph) {
-		ArrayList<String> prelist=new ArrayList<String>();
-		
-		try {
-			prelist=new Rules().validate(rule, paragraph);
-			
-		} catch (Exception e) {
-			e.printStackTrace();
+	
+	public ArrayList<ArrayList<String>> getSentByRule(String rule,String paragraphs) {
+		String[] scenes = paragraphs.split("\\r?\\n");
+
+		ArrayList<ArrayList<String>> preListAll = new ArrayList<ArrayList<String>>();
+
+		for (int i = 0; i < scenes.length; i++) {
+			ArrayList<String> preList = new ArrayList<String>();
+			System.out.println("scen" + i + ":" + scenes);
+			preList = new Rules().validate(rule,scenes[i]);// pass the spilt
+																// paragraph
+
+			System.out.println("TESTCASE" + i + preList);
+
+			Set<String> hs = new LinkedHashSet<>(preList);
+			// hs.addAll(testList);
+			preList.clear();
+			preList.addAll(hs);
+			preListAll.add(preList);
 		}
-		return prelist;
+		return preListAll;
 	}
 
 }

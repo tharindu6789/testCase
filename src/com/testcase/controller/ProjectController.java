@@ -20,6 +20,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.testcase.model.Project;
 import com.testcase.service.ProjectService;
 
+import opennlp.tools.sentdetect.SentenceDetectorME;
+
 @RestController
 public class ProjectController {
 
@@ -195,25 +197,28 @@ public class ProjectController {
 			return new ResponseEntity<ArrayList<ArrayList<String>>>(HttpStatus.NOT_FOUND);
 		}
 		String paragraphs = current.getFunc_require();
-		String[] scenes = paragraphs.split("\\r?\\n");
+		ArrayList<ArrayList<String>> preListAll=projectService.getSentByRule(rule, paragraphs);
 
-		ArrayList<ArrayList<String>> preListAll = new ArrayList<ArrayList<String>>();
+		return new ResponseEntity<ArrayList<ArrayList<String>>>(preListAll, HttpStatus.OK);
+	}
+	@RequestMapping(value = "/testcase_description/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ArrayList<ArrayList<String>>> getTestSuiteName(@PathVariable("id") int id) {
+		System.out.println("get Prerequite" + id);
 
-		for (int i = 0; i < scenes.length; i++) {
-			ArrayList<String> preList = new ArrayList<String>();
-			System.out.println("scen" + i + ":" + scenes);
-			preList = projectService.getSentByRule(rule,scenes[i]);// pass the spilt
-																// paragraph
-
-			System.out.println("TESTCASE" + i + preList);
-
-			Set<String> hs = new LinkedHashSet<>(preList);
-			// hs.addAll(testList);
-			preList.clear();
-			preList.addAll(hs);
-			preListAll.add(preList);
+		Project current = new Project();
+		current = projectService.findById(id);
+		if (current == null) {
+			System.out.println("Project with id " + id + " not found");
+			return new ResponseEntity<ArrayList<ArrayList<String>>>(HttpStatus.NOT_FOUND);
 		}
-
+		String paragraphs = current.getFunc_require();
+		ArrayList<ArrayList<String>> preListAll=projectService.getSentByRule("tc_description", paragraphs);
+		
+		System.out.println(preListAll.get(0));
+		for(int i=0; i<preListAll.size(); i++){
+			String sentence= preListAll.get(i).get(0);
+			System.out.println(sentence);
+		}
 		return new ResponseEntity<ArrayList<ArrayList<String>>>(preListAll, HttpStatus.OK);
 	}
 	

@@ -20,5 +20,5 @@ public interface ProjectService {
 
 	public ArrayList<String> getDescription(String paragraph);
 
-	public ArrayList<String> getSentByRule(String rule,String paragraph);
+	public ArrayList<ArrayList<String>> getSentByRule(String rule,String paragraph);
 }
