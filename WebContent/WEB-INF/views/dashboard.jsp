@@ -584,14 +584,14 @@ $("body").on("click","#generateBtn",function(e){
 			 var test_suite="";
 			 
 			 $.ajax({
-				 url:base_url+'testcase_rule/tc_description/'+id,
+				 url:base_url+'testcase_description/'+id,
 				 type:"GET",
 				 dataType:'json',
 				 contentType:'application/json',
 				 success:function(data){
 					 alert(data[0]);
 					var	test_suite=data[0];
-					var htm="<li><span><i class='icon-minus-sign'></i>"+test_suite+"</span>"+
+					var htm="<li style='display: list-item;'><span><i class='icon-minus-sign'></i>"+test_suite+"</span>"+
 	                 "<ul><li><span><i class='icon-leaf'></i> Test Case1</span></li></ul> </li>";
 			 $("#F"+id).append(htm); 
 				 }

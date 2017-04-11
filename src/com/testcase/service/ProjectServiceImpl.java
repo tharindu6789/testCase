@@ -112,5 +112,10 @@ dao.save(project);
 		}
 		return preListAll;
 	}
+	public String getTestSuiteDesc(String sentence){
+		
+		sentence= new TestSuiteDescRule().validateSentence(sentence);
+		return sentence;
+	}
 
 }
