@@ -13,29 +13,110 @@ public class TestDesc_constant {
 
 				
 "scenario/NN","scenarios/NNS","target/NN","targets/NNS","focus/NN","focused/VBD","requirement/NN","requirements/NNS",
-"category/NN","categories/NNS","phase/NN","phases/NNS","function/NN","functions/NNS","vactivity/NN","activities/NNS", 			
-"section/NN","sections/NNS","segment/NN","segment/NNS","segmenting/NNS","sector/NN","sectors/NNP",			
-"partition/NN","partitions/NNS","partitioning/VBG","unit/NN","units/NNS","objective/NN","objectives/NNS",		
-"perspective/NN","perspectives/NNS","aspect/NN","aspects/NNS","describe/VB","describes/VBZ","describing/VBG","described/VBD",   	
-"about/IN","base/NN","based/VBN","aim/NN","aims/VBZ","aiming/VBG","aimed/VBD","point/NN","points/NNS","pointing/VBG","pointed/VBD",	     		
-"provide/VB","provides/VBZ","providing/VBG","provided/VBD","appoint/VB","appoints/VBZ","appointing/VBG","appointed/VBD",
-"concentrate/VB","concentrates/VBZ","concentrating/VBG","concentrated/JJ","concern/NN","concerns/NNS","concerning/VBG","concerned/JJ"	   
-
-
-
+"category/NN","categories/NNS","phase/NN","phases/NNS","function/NN","functions/NNS","activity/NN","activities/NNS", 			
+"section/NN","sections/NNS","segment/NN","segments/NNS","segmenting/NNS","sector/NN","sectors/NNP",			
+"partition/NN","partitions/NNS","partitioning/VBG","purpose/NN","purposes/NNS","unit/NN","units/NNS","objective/NN",
+"objectives/NNS","perspective/NN","perspectives/NNS","aspect/NN","aspects/NNS","describe/VB","describes/VBZ",
+"describing/VBG","described/VBD","about/IN","base/NN","based/VBN","aim/NN","aims/VBZ","aiming/VBG","aimed/VBD",
+"point/NN","points/NNS","pointing/VBG","pointed/VBD","provide/VB","provides/VBZ","providing/VBG","provided/VBD",
+"appoint/VB","appoints/VBZ","appointing/VBG","appointed/VBD","concentrate/VB","concentrates/VBZ","concentrating/VBG",
+"concentrated/JJ","concern/NN","concerns/NNS","concerning/VBG","concerned/JJ","outline/NN","outlines/NNS","outlining/VBG","outlined/VBD"
+			  
 			
 				));
 		return x;
 	}
 
 	
-	public static Map<String,Integer> descPriority(){// rule4 & 5 (before & after)
+	public static Map<String,Integer> descWordsPriority(){// Individual predefined words priority
+	final Map<String,Integer> descWordsMap = new HashMap<String, Integer>();
+	
+	
+	descWordsMap.put("scenario", 1);
+	descWordsMap.put("scenarios", 1);
+	descWordsMap.put("target", 2);
+	descWordsMap.put("targets", 2);
+	descWordsMap.put("focus", 3);
+	descWordsMap.put("focused", 3);
+	descWordsMap.put("requirement", 4);
+	descWordsMap.put("requirements", 4);
+	descWordsMap.put("category", 5);
+	descWordsMap.put("categories", 5);
+	descWordsMap.put("phase", 6);
+	descWordsMap.put("phases", 6);
+	descWordsMap.put("function", 7);
+	descWordsMap.put("functions", 7);
+	descWordsMap.put("activity", 8);
+	descWordsMap.put("activities", 8);
+	descWordsMap.put("section", 9);
+	descWordsMap.put("sections", 9);
+	descWordsMap.put("segment", 10);
+	descWordsMap.put("segments", 10);
+	descWordsMap.put("segmenting", 10);
+	descWordsMap.put("sector", 11);
+	descWordsMap.put("sectors", 11);
+	descWordsMap.put("partition", 12);
+	descWordsMap.put("partitions", 12);
+	descWordsMap.put("partitioning", 12);
+	descWordsMap.put("purpose", 13);
+	descWordsMap.put("purposes", 13);
+	descWordsMap.put("unit", 14);
+	descWordsMap.put("units", 14);
+	descWordsMap.put("objective", 15);
+	descWordsMap.put("objectives", 15);
+	descWordsMap.put("perspective", 16);
+	descWordsMap.put("perspectives", 16);
+	descWordsMap.put("aspect", 17);
+	descWordsMap.put("aspects", 17);
+	descWordsMap.put("describe", 18);
+	descWordsMap.put("describes", 18);
+	descWordsMap.put("describing", 18);
+	descWordsMap.put("described", 18);
+	descWordsMap.put("about", 19);
+	descWordsMap.put("base", 20);
+	descWordsMap.put("based", 20);
+	descWordsMap.put("aim", 21);
+	descWordsMap.put("aims", 21);
+	descWordsMap.put("aiming", 21);
+	descWordsMap.put("aimed", 21);
+	descWordsMap.put("point", 22);
+	descWordsMap.put("points", 22);
+	descWordsMap.put("pointing", 22);
+	descWordsMap.put("pointed", 22);
+	descWordsMap.put("provide", 23);
+	descWordsMap.put("provides", 23);
+	descWordsMap.put("providing", 23);
+	descWordsMap.put("provided", 23);
+	descWordsMap.put("appoint", 24);
+	descWordsMap.put("appoints", 24);
+	descWordsMap.put("appointing", 24);
+	descWordsMap.put("appointed", 24);	
+	descWordsMap.put("concentrate", 25);
+	descWordsMap.put("concentrates", 25);
+	descWordsMap.put("concentrating", 25);
+	descWordsMap.put("concentrated", 25);	
+	descWordsMap.put("concern", 26);
+	descWordsMap.put("concerns", 26);
+	descWordsMap.put("concerning", 26);	
+	descWordsMap.put("concerned", 26);
+	descWordsMap.put("outline", 27);	
+	descWordsMap.put("outlines", 27);
+	descWordsMap.put("outlining", 27);
+	descWordsMap.put("outlined", 27);	
+
+
+	
+	
+	return descWordsMap;
+	}
+	
+	public static Map<String,Integer> descPriority(){// rule4 & 5 (before & after) (Grammar rule)
 	final Map<String,Integer> descMap = new HashMap<String, Integer>();
 	
 	
-	descMap.put("scenario/NN", 1);
-	descMap.put("scenarios/NNS", 1);
-	descMap.put("target/NN", 2);
+	//descMap.put("scenario/NN", 1);
+	//descMap.put("scenarios/NNS", 1);
+	//descMap.put("target/NN", 2);
 	
 	
 	/////////////////////////////////////////

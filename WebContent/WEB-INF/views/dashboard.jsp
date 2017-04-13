@@ -561,6 +561,16 @@ $("body").on("click","#generateBtn",function(e){
 	 e.preventDefault();
 	
 	var id= $("#project_id").val();
+	var prerequites=[];
+	 $.ajax({
+		 url:base_url+'testcase_rule/prerequisite/'+id,
+		 type:"GET",
+		 dataType:'json',
+		 contentType:'application/json',
+		 success:function(data){
+			prerequites=data;
+		 }
+	 });
 	 $.ajax({
 		 type:"GET",
 		 url:base_url+'project_testcase/'+id,
@@ -582,22 +592,77 @@ $("body").on("click","#generateBtn",function(e){
 			 $("#expected_result").text(expected_result);
 			 
 			 var test_suite="";
-			 
 			 $.ajax({
-				 url:base_url+'testcase_description/'+id,
+				 url:base_url+'testcase_name/'+id,
 				 type:"GET",
 				 dataType:'json',
 				 contentType:'application/json',
-				 success:function(data){
-					 alert(data[0]);
-					var	test_suite=data[0];
-					var htm="<li style='display: list-item;'><span><i class='icon-minus-sign'></i>"+test_suite+"</span>"+
-	                 "<ul><li><span><i class='icon-leaf'></i> Test Case1</span></li></ul> </li>";
-			 $("#F"+id).append(htm); 
+				 success:function(data2){
+						
+					/*  $.each(data2, function(i,obj) {// check prerequites comparison
+						 if(prerequites[0][0] === prerequites[i][0] ){
+						  //test_name+="<li><span><i class='icon-leaf'></i>"+obj+"</span></li>";
+						 }else{
+							 j.push(i);
+						 }
+					 }); */
+					 $.ajax({
+						 url:base_url+'testcase_description/'+id,
+						 type:"GET",
+						 dataType:'json',
+						 contentType:'application/json',
+						 success:function(data){
+							/*  if(j.length ==0){
+							var	test_suite=data[0];							
+							var htm="<li><span><i class='icon-minus-sign'></i>"+test_suite+"</span>"+
+			                 "<ul>"+test_name+"</ul> </li>";
+					 		$("#F"+id).append(htm); 
+							 } else{  */
+								 var htm="";
+								
+										var	test_name="";
+										var j=[];
+									 $.each(data2, function(i,obj2) {// check prerequites comparison
+										 if(prerequites[0][0] === prerequites[i][0] ){
+										  test_name+="<li><span><i class='icon-leaf'></i>"+obj2+"</span></li>";
+										 }else{
+											 j.push(i);
+										 }
+									 });
+									 htm="<li><span><i class='icon-minus-sign'></i>"+data[0]+"</span>"+
+					                 "<ul>"+test_name+"</ul> </li>";
+									// alert(j.length !==0);
+									 if(j.length !==0){
+										 test_name="";
+										 $.each(j,function(i,obj){
+											 if(prerequites[obj][0] === prerequites[i][0] ){
+												 test_name+="<li><span><i class='icon-leaf'></i>"+data2[i]+"</span></li>";
+												 htm+="<li><span><i class='icon-minus-sign'></i>"+data[i]+"</span>"+
+								                 "<ul>"+test_name+"</ul> </li>";
+											 }else{
+												 test_name+="<li><span><i class='icon-leaf'></i>"+data2[obj]+"</span></li>";
+												 htm+="<li><span><i class='icon-minus-sign'></i>"+data[obj]+"</span>"+
+								                 "<ul>"+test_name+"</ul> </li>"; 
+											 }
+											 
+										 });
+										
+										 
+									 }else{
+										
+									 }
+									 $("#F"+id).append(htm);	
+								 
+						 		
+
+							// }
+						 }
+					 });
 				 }
 			 });
+			 
 			
-			
+			// treeList();
 			 
 			for(i=4; i<data[0].length;i++){
 				$("#test_body").append("<tr><td>"+Number(i-3)+"</td><td>"+data[0][i]+"</td>");

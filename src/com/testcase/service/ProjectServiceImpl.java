@@ -117,5 +117,10 @@ dao.save(project);
 		sentence= new TestSuiteDescRule().validateSentence(sentence);
 		return sentence;
 	}
+	public String getTestCaseName(String sentence){
+		
+		sentence= new TestCaseNameRule().validateSentence(sentence);
+		return sentence;
+	}
 
 }

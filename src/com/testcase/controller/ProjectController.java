@@ -214,13 +214,37 @@ public class ProjectController {
 		String paragraphs = current.getFunc_require();
 		ArrayList<ArrayList<String>> preListAll=projectService.getSentByRule("tc_description", paragraphs);
 		
+		System.out.println("preListAll:"+preListAll.toString());
+		ArrayList<String> tsList=new ArrayList<String>();
+		for(int i=0; i<preListAll.size(); i++){
+			String sentence= preListAll.get(i).get(0);
+			System.out.println("PreSEnt:"+sentence);
+
+			sentence=projectService.getTestSuiteDesc(sentence);
+			tsList.add(sentence);
+		}
+		return new ResponseEntity<ArrayList<String>>(tsList, HttpStatus.OK);
+	}
+	@RequestMapping(value = "/testcase_name/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ArrayList<String>> getTestCaseName(@PathVariable("id") int id) {
+		System.out.println("get TestCaseName" + id);
+		
+		Project current = new Project();
+		current = projectService.findById(id);
+		if (current == null) {
+			System.out.println("Project with id " + id + " not found");
+			return new ResponseEntity<ArrayList<String>>(HttpStatus.NOT_FOUND);
+		}
+		String paragraphs = current.getFunc_require();
+		ArrayList<ArrayList<String>> preListAll=projectService.getSentByRule("tc_outcome", paragraphs);
+		
 		System.out.println(preListAll.get(0));
 		ArrayList<String> tsList=new ArrayList<String>();
 		for(int i=0; i<preListAll.size(); i++){
 			String sentence= preListAll.get(i).get(0);
 			System.out.println(sentence);
-
-			sentence=projectService.getTestSuiteDesc(sentence);
+			
+			sentence=projectService.getTestCaseName(sentence);
 			tsList.add(sentence);
 		}
 		return new ResponseEntity<ArrayList<String>>(tsList, HttpStatus.OK);

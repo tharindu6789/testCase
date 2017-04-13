@@ -11,23 +11,112 @@ public class Outcome_constant {
 		
 		List<String> x = new ArrayList<String>(Arrays.asList(
 
-				
-"scenario/NN","scenarios/NNS","target/NN","targets/NNS","focus/NN","focused/VBD","requirement/NN","requirements/NNS",
-"category/NN","categories/NNS","phase/NN","phases/NNS","function/NN","functions/NNS","vactivity/NN","activities/NNS", 			
-"section/NN","sections/NNS","segment/NN","segment/NNS","segmenting/NNS","sector/NN","sectors/NNP",			
-"partition/NN","partitions/NNS","partitioning/VBG","unit/NN","units/NNS","objective/NN","objectives/NNS",		
-"perspective/NN","perspectives/NNS","aspect/NN","aspects/NNS","describe/VB","describes/VBZ","describing/VBG","described/VBD",   	
-"about/IN","base/NN","based/VBN","aim/NN","aims/VBZ","aiming/VBG","aimed/VBD","point/NN","points/NNS","pointing/VBG","pointed/VBD",	     		
-"provide/VB","provides/VBZ","providing/VBG","provided/VBD","appoint/VB","appoints/VBZ","appointing/VBG","appointed/VBD",
-"concentrate/VB","concentrates/VBZ","concentrating/VBG","concentrated/JJ","concern/NN","concerns/NNS","concerning/VBG","concerned/JJ"	   
-
-
-
+				"must/MD","may/MD","might/MD","should/MD","shall/MD","expect/VB","expects/VBZ","expecting/VBG",
+				"expected/VBD","wish/VB","wishes/VBZ","wishing/VBG","whished/VBD","result/NN","results/NNS",
+				"resulting/VBG","outcome/NN","outcomes/NNS","goal/NN","goals/NNS","goaled/VBD","final/JJ","finals/NNS",			               
+				"finally/RB","finalize/NN","finalizes/NN","finalizing/VBG","finalized/VBD","end/NN","ends/VBZ",
+				"ending/VBG","ended/VBD","figure/NN","figures/NNS","figuring/VBG","figured/VBD","achieve/VB",
+				"archives/VBZ","achieving/VBG","achieved/VBD","fulfill/VB","fulfills/VBZ","fulfilling/JJ",
+				"fulfilled/JJ","satisfy/VB","satisfies/VBZ","satisfying/JJ","satisfied/JJ","meet/VB","meets/VBZ",
+				"meeting/NN","met/VBD","predict/VB","predicts/VBZ","predicting/VBG","predicted/VBD","anticipate/VB",
+				"anticipates/VBZ","anticipating/VBG","anticipated/JJ","suppose/VB","supposes/VBZ","supposing/VBG",
+				"supposed/VBN","product/NN","products/NNS","production/NN","productions/NNS","produce/VB","produces/VBZ",
+				"producing/VBG","produced/VBD","solution/NN","solutions/NNS","answer/NN","answers/NNS","answering/VBG","answered/VBD"		  
+			
 			
 				));
 		return x;
 	}
+	
+	
+	
+	public static Map<String,Integer> OutcomewordsPriority(){// Outcome predefined words priority rule
+		final Map<String,Integer> outcomeWordsMap = new HashMap<String, Integer>();
+		
+		
+		
+		outcomeWordsMap.put("must", 1); 
+		outcomeWordsMap.put("may", 1);
+		outcomeWordsMap.put("might", 1);
+		outcomeWordsMap.put("should", 2);
+		outcomeWordsMap.put("shall", 2);
+		outcomeWordsMap.put("expect", 3);
+		outcomeWordsMap.put("expects", 3);
+		outcomeWordsMap.put("expecting", 3);
+		outcomeWordsMap.put("expected", 3);
+		outcomeWordsMap.put("wish", 4);
+		outcomeWordsMap.put("wishes", 4); 
+		outcomeWordsMap.put("wishing", 4);
+		outcomeWordsMap.put("whished", 4);
+		outcomeWordsMap.put("result", 5);
+		outcomeWordsMap.put("results", 5);
+		outcomeWordsMap.put("resulting", 5);
+		outcomeWordsMap.put("outcome", 6);
+		outcomeWordsMap.put("outcomes", 6);
+		outcomeWordsMap.put("goal", 7);
+		outcomeWordsMap.put("goals", 7);
+		outcomeWordsMap.put("goaled", 7);
+		outcomeWordsMap.put("finally", 8);
+		outcomeWordsMap.put("final", 9);
+		outcomeWordsMap.put("finals", 9);
+		outcomeWordsMap.put("finalize", 10);
+		outcomeWordsMap.put("finalizes", 10);
+		outcomeWordsMap.put("finalizing", 10);
+		outcomeWordsMap.put("finalized", 10);
+		outcomeWordsMap.put("end", 11);
+		outcomeWordsMap.put("ends", 11);
+		outcomeWordsMap.put("ending", 11); 
+		outcomeWordsMap.put("ended", 11);
+		outcomeWordsMap.put("figure", 12);
+		outcomeWordsMap.put("figures", 12);
+		outcomeWordsMap.put("figuring", 12);
+		outcomeWordsMap.put("figured", 12);
+		outcomeWordsMap.put("achieve", 13);
+		outcomeWordsMap.put("achieves", 13);
+		outcomeWordsMap.put("achieving", 13);
+		outcomeWordsMap.put("achieved", 13);
+		outcomeWordsMap.put("fulfill", 14); 
+		outcomeWordsMap.put("fulfills", 14);
+		outcomeWordsMap.put("fulfilling", 14);
+		outcomeWordsMap.put("fulfilled", 14);
+		outcomeWordsMap.put("satisfy", 15);
+		outcomeWordsMap.put("satisfies", 15);
+		outcomeWordsMap.put("satisfying", 15);
+		outcomeWordsMap.put("satisfied", 15);
+		outcomeWordsMap.put("meet", 16);
+		outcomeWordsMap.put("meets", 16);
+		outcomeWordsMap.put("meeting", 16); 
+		outcomeWordsMap.put("met", 16);
+		outcomeWordsMap.put("predict", 17);
+		outcomeWordsMap.put("predicts", 17);
+		outcomeWordsMap.put("predicting", 17);
+		outcomeWordsMap.put("predicted", 17);
+		outcomeWordsMap.put("anticipate", 18);
+		outcomeWordsMap.put("anticipates", 18);
+		outcomeWordsMap.put("anticipating", 18);
+		outcomeWordsMap.put("anticipated", 18);
+		outcomeWordsMap.put("suppose", 19);
+		outcomeWordsMap.put("supposes", 19);
+		outcomeWordsMap.put("supposing", 19);
+		outcomeWordsMap.put("supposed", 19);
+		outcomeWordsMap.put("product", 20);
+		outcomeWordsMap.put("products", 20);
+		outcomeWordsMap.put("production", 20);
+		outcomeWordsMap.put("productions", 20);
+		outcomeWordsMap.put("produce", 21);
+		outcomeWordsMap.put("produces", 21);
+		outcomeWordsMap.put("producing", 21);
+		outcomeWordsMap.put("produced", 21);
+		outcomeWordsMap.put("solution", 22);
+		outcomeWordsMap.put("solutions", 22);
+		outcomeWordsMap.put("answer", 23);
+		outcomeWordsMap.put("answers", 23);
+		outcomeWordsMap.put("answering", 23);
 
+	
+		return outcomeWordsMap;
+	}
+	
 	
 	public static Map<String,Integer> descPriority(){// rule4 & 5 (before & after)
 	final Map<String,Integer> descMap = new HashMap<String, Integer>();

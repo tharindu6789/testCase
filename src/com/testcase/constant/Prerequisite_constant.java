@@ -11,7 +11,7 @@ public class Prerequisite_constant {
 		
 		List<String> x = new ArrayList<String>(Arrays.asList(
 				"Prerequisite/VB", "prerequisite/NNP","pre-requisite/NN"				
-				,"prerequisites/NN","prerequisiting/NN","prerequisiting/VBG","pre-requisite/NN","pre-requisites/NN",
+				,"prerequisites/NN","prerequisiting/NN","prerequisiting/VBG",
 				"pre-requisiting/NN","precondition/NN","preconditions/NNS","preconditioning/NN","preconditioning/VBG",
 				"pre-condition/NN","pre-conditions/NNS","pre-conditioning/NN","prerequire/NN","prerequires/NN","prerequiring/NN",
 				"prerequired/NN","pre-require/NN","pre-requires/NN","pre-requiring/NN","pre-required/NN","predefine/NN",
@@ -20,18 +20,97 @@ public class Prerequisite_constant {
 				"pre-describes/NN","pre-describing/NN","pre-described/NN","Must/MD","must/MD","Might/MD","might/MD",
 				"may/MD","Should/MD","should/MD","Shall/MD","shall/MD","Already/RB","already/RB","Before/IN","before/IN",
 				"requisite/JJ","requisites/NNS","Requisiting/NN","requisiting/VBG","requisited/VBD","require/VB","require/VBP",
-				"requires/VBZ","requiring/VBG","requiring/VBG","Mandatory/JJ","mandatory/JJ","Need/NN","need/VBP",
-				"Needs/NNS","needs/VBZ","Needed/VBN","need/VBP","Essential/JJ","essential/JJ","Essentials/NNS","essentials/NNS"
+				"requires/VBZ","requiring/VBG","Mandatory/JJ","mandatory/JJ","Need/NN","need/VBP",
+				"Needs/NNS","needs/VBZ","Needed/VBN","needed/VBP","Essential/JJ","essential/JJ","Essentials/NNS","essentials/NNS"
 				
-
-
-			
 				));
 		return x;
 	}
 
 	
-	public static Map<String,Integer> predefinedPriority(){// rule4 & 5 (before & after)
+	public static Map<String,Integer> predefinedWordPriority(){// rule4 & 5 (before & after) (Grammar rule priority)
+		final Map<String,Integer> predefinedWordsMap = new HashMap<String, Integer>();
+	
+		
+		predefinedWordsMap.put("Prerequisite", 1);
+		predefinedWordsMap.put("prerequisite", 1);
+		predefinedWordsMap.put("pre-requisite", 1);
+		predefinedWordsMap.put("prerequisites", 1);
+		predefinedWordsMap.put("prerequisiting", 1);
+		predefinedWordsMap.put("pre-requisiting", 1);
+		predefinedWordsMap.put("precondition", 2);
+		predefinedWordsMap.put("preconditions", 2);
+		predefinedWordsMap.put("preconditioning", 2);
+		predefinedWordsMap.put("pre-condition", 2);
+		predefinedWordsMap.put("pre-conditions", 2);
+		predefinedWordsMap.put("pre-conditioning", 2);
+		predefinedWordsMap.put("prerequire", 3);
+		predefinedWordsMap.put("prerequires", 3);
+		predefinedWordsMap.put("prerequiring", 3);
+		predefinedWordsMap.put("prerequired", 3);
+		predefinedWordsMap.put("pre-require", 3);
+		predefinedWordsMap.put("pre-requires", 3);
+		predefinedWordsMap.put("pre-requiring", 3);
+		predefinedWordsMap.put("pre-required", 3);
+		predefinedWordsMap.put("predefine", 4);
+		predefinedWordsMap.put("predefines", 4);
+		predefinedWordsMap.put("predefining", 4);
+		predefinedWordsMap.put("predefined", 4);
+		predefinedWordsMap.put("pre-define", 4);
+		predefinedWordsMap.put("pre-defines", 4);
+		predefinedWordsMap.put("pre-defining", 4);
+		predefinedWordsMap.put("pre-defined", 4);
+		predefinedWordsMap.put("predescribe", 5);
+		predefinedWordsMap.put("predescribes", 5);
+		predefinedWordsMap.put("predescribing", 5);
+		predefinedWordsMap.put("predescribed", 5);
+		predefinedWordsMap.put("pre-describe", 5);
+		predefinedWordsMap.put("pre-describes", 5);
+		predefinedWordsMap.put("pre-describing", 5);
+		predefinedWordsMap.put("pre-described", 5);
+		predefinedWordsMap.put("Must", 6);
+		predefinedWordsMap.put("must", 6);
+		predefinedWordsMap.put("Might", 6);
+		predefinedWordsMap.put("might", 6);
+		predefinedWordsMap.put("may", 6);
+		predefinedWordsMap.put("Should", 7);
+		predefinedWordsMap.put("should", 7);
+		predefinedWordsMap.put("Shall", 7);
+		predefinedWordsMap.put("shall", 7);
+		predefinedWordsMap.put("Already", 8);
+		predefinedWordsMap.put("already", 8);
+		predefinedWordsMap.put("Before", 9);		
+		predefinedWordsMap.put("before", 9);
+		predefinedWordsMap.put("requisite", 10);
+		predefinedWordsMap.put("requisites", 10);		
+		predefinedWordsMap.put("Requisiting", 10);
+		predefinedWordsMap.put("requisiting", 10);
+		predefinedWordsMap.put("requisited", 10);		
+		predefinedWordsMap.put("require", 11);		
+		predefinedWordsMap.put("requires", 11);		
+		predefinedWordsMap.put("requiring", 11);
+		predefinedWordsMap.put("Mandatory", 12);
+		predefinedWordsMap.put("mandatory", 12);
+		predefinedWordsMap.put("Need", 13);
+		predefinedWordsMap.put("need", 13);
+		predefinedWordsMap.put("Needs", 13);
+		predefinedWordsMap.put("needs", 13);
+		predefinedWordsMap.put("Needed", 13);
+		predefinedWordsMap.put("needed", 13);
+		predefinedWordsMap.put("Essential", 14);
+		predefinedWordsMap.put("essential", 14);
+		predefinedWordsMap.put("Essentials", 14);
+		predefinedWordsMap.put("essentials", 14);	
+
+		
+		
+		
+		
+		return predefinedWordsMap;
+		
+	}
+		
+	public static Map<String,Integer> predefinedPriority(){// rule4 & 5 (before & after) (Grammar rule priority)
 	final Map<String,Integer> predefinedMap = new HashMap<String, Integer>();
 	
 	predefinedMap.put("Must/VB", 1);  // prerequisite is predefined verb(VB)
