@@ -95,7 +95,8 @@ table, th, td {
     border-radius:5px;
     display:inline-block;
     padding:3px 8px;
-    text-decoration:none
+    text-decoration:none;
+    font-size:12px;
 }
 .tree li.parent_li>span {
     cursor:pointer
@@ -188,12 +189,12 @@ footer {
 
 	<div class="container-fluid ">
 		<div class="row content" style="height: 600px">
-			<div class="col-md-3 sidenav">
+			<div class="col-md-4 sidenav">
 				<div class="well">				
 					<p>My Projects</p>
 				</div>
 	    <div class="tree">
-    <ul id=project_list>
+    <ul id=project_list style="margin-left: -50px;">
         <li>
             <span class="hasmenu">Project 1</span>
             <ul>
@@ -220,7 +221,7 @@ footer {
 
 
 			</div>
-			<div class="col-sm-7">
+			<div class="col-md-6">
 				<div class="container-fluid">
 					<div class="well">
 						<button class="btn btn-primary" href="#modal" data-toggle="modal">Create</button>
@@ -244,7 +245,7 @@ footer {
 					</div>
 				</div>
 			</div>
-			<div class="col-sm-2 sidenav">
+			<div class="col-md-2 sidenav">
 				
 			</div>
 		</div>
@@ -366,7 +367,10 @@ function treeList() {
         }
        // e.stopPropagation();
     });
-    var children2 = $('.tree li.parent_li > span').parent('li.parent_li').find(' > ul > li');
+   
+}
+function hideTree(){
+	var children2 = $('.tree li.parent_li > span').parent('li.parent_li').find(' > ul > li');
 	 children2.hide('fast');
 }
 //right button click
@@ -474,6 +478,7 @@ $(document).contextmenu({
 				  
 			});
 			treeList();
+			hideTree();
 		}	 
 	 });/*end- load projects from db */
 	 
@@ -521,9 +526,6 @@ $(document).contextmenu({
 $("#projectForm").submit(function(e){
 	e.preventDefault();
 	var formData=$(this).serialize();
-	
-	
-	
 	$.ajax({
 		type:'post',
 		url:base_url+'project/',
@@ -561,7 +563,6 @@ $("body").on("click","#generateBtn",function(e){
 	 e.preventDefault();
 	
 	var id= $("#project_id").val();
-	var prerequites=[];
 	 $.ajax({
 		 url:base_url+'testcase_rule/prerequisite/'+id,
 		 type:"GET",
@@ -571,6 +572,37 @@ $("body").on("click","#generateBtn",function(e){
 			prerequites=data;
 		 }
 	 });
+	 loadModal(id);
+	
+});
+
+function loadModal(id){
+	var prerequites=[];
+	var prerequite=[];
+
+	var testcase_descriptions=[];
+	var alternatives=[];
+	var outcome=[];
+	$.get( base_url+"testcase_rule/tc_description/"+id, function( data ) {
+		$.each(data,function(i,obj){
+			testcase_descriptions.push(obj);
+		});
+	});
+	$.get( base_url+"testcase_rule/prerequisite/"+id, function( data ) {
+		$.each(data,function(i,obj){
+			prerequite.push(obj);
+		});
+	});
+	$.get( base_url+"testcase_rule/tc_alternative/"+id, function( data ) {
+		$.each(data,function(i,obj){
+			alternatives.push(obj);
+		});
+	});
+	$.get( base_url+"testcase_rule/tc_outcome/"+id, function( data ) {
+		$.each(data,function(i,obj){
+			outcome.push(obj);
+		});
+	});
 	 $.ajax({
 		 type:"GET",
 		 url:base_url+'project_testcase/'+id,
@@ -580,9 +612,8 @@ $("body").on("click","#generateBtn",function(e){
 				$("#testcase-modal").modal("show");
 
 			 $("#test_body").empty(); // line added here
-			 alert(data[0]);
 			 var description=data[0][0];
-			 var prerequisite=data[0][1];
+			 //var prerequisite=data[0][1];
 			 var alternative=data[0][2];
 			 var expected_result=data[0][3];
 			 
@@ -651,7 +682,7 @@ $("body").on("click","#generateBtn",function(e){
 									 }else{
 										
 									 }
-									 $("#F"+id).append(htm);	
+									 $("#F"+id).append("<ul>"+htm+"</ul>");	
 								 
 						 		
 
@@ -662,7 +693,7 @@ $("body").on("click","#generateBtn",function(e){
 			 });
 			 
 			
-			// treeList();
+			 treeList();
 			 
 			for(i=4; i<data[0].length;i++){
 				$("#test_body").append("<tr><td>"+Number(i-3)+"</td><td>"+data[0][i]+"</td>");
@@ -671,7 +702,7 @@ $("body").on("click","#generateBtn",function(e){
 			
 		 }
 	 });
-});
+}
 /*end- click on project list item */
 </script>
 </html>
