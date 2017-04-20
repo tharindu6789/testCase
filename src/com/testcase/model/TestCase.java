@@ -23,9 +23,7 @@ public class TestCase {
 	@JoinColumn(name = "TEST_SUITE_ID")
 	private TestSuite test_suit_id;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "PROJECT_ID")
-	private Project projetc_id;
+	
 	
 	@Column(name = "FUNC_REQUIRE")
 	private String func_require;
@@ -51,13 +49,7 @@ public class TestCase {
 		this.test_suit_id = test_suit_id;
 	}
 
-	public Project getProjetc_id() {
-		return projetc_id;
-	}
-
-	public void setProjetc_id(Project projetc_id) {
-		this.projetc_id = projetc_id;
-	}
+	
 
 	public String getFunc_require() {
 		return func_require;

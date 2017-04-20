@@ -484,6 +484,10 @@ $(document).contextmenu({
 	 
 	 /*start- click on project list item */
 	 $("#project_list:has(li)").on("click",".projectItem",function(e){
+		 testcase={description:"des",prerequisite:"adas",test_step:[
+			                                                    {id:1,step:"asd"},{id:2,step:"asd2"}
+			                                                    ],outcome:"out",alternative:"al"};
+			alert(testcase.description);
 		 e.preventDefault();
 		 var current=this.id;
 		 var id=current.replace("P","");
@@ -561,7 +565,7 @@ $.fn.serializeObject = function()
 /*start- click on project list item */
 $("body").on("click","#generateBtn",function(e){
 	 e.preventDefault();
-	
+	 var prerequites=[];
 	var id= $("#project_id").val();
 	 $.ajax({
 		 url:base_url+'testcase_rule/prerequisite/'+id,
@@ -569,20 +573,24 @@ $("body").on("click","#generateBtn",function(e){
 		 dataType:'json',
 		 contentType:'application/json',
 		 success:function(data){
-			prerequites=data;
+			 console.log(data);
+			 prerequites=data;
+			 loadModal(id,prerequites);
 		 }
 	 });
-	 loadModal(id);
+	 
 	
 });
 
-function loadModal(id){
-	var prerequites=[];
+function loadModal(id,prerequites){
+	
 	var prerequite=[];
 
 	var testcase_descriptions=[];
 	var alternatives=[];
 	var outcome=[];
+	
+	
 	$.get( base_url+"testcase_rule/tc_description/"+id, function( data ) {
 		$.each(data,function(i,obj){
 			testcase_descriptions.push(obj);
@@ -609,7 +617,7 @@ function loadModal(id){
 		 dataType:'json',
 		 contentType:'application/json',
 		 success:function(data){
-				$("#testcase-modal").modal("show");
+				//$("#testcase-modal").modal("show");
 
 			 $("#test_body").empty(); // line added here
 			 var description=data[0][0];
@@ -693,7 +701,7 @@ function loadModal(id){
 			 });
 			 
 			
-			 treeList();
+			 //treeList();
 			 
 			for(i=4; i<data[0].length;i++){
 				$("#test_body").append("<tr><td>"+Number(i-3)+"</td><td>"+data[0][i]+"</td>");

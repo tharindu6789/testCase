@@ -63,7 +63,6 @@ public class TestCaseController {
         }       
         current.setFunc_require(testCase.getFunc_require());
         current.setNon_func_require(testCase.getNon_func_require());
-        current.setProjetc_id(testCase.getProjetc_id());
         current.setTest_suit_id(testCase.getTest_suit_id());
         testCaseService.update(current);
         return new ResponseEntity<TestCase>(current, HttpStatus.OK);
