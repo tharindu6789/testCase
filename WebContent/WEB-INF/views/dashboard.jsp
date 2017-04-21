@@ -150,14 +150,14 @@ footer {
 </head>
 <body>
 <%
-			User currentUser = (User) (session.getAttribute("user"));
+			/* User currentUser = (User) (session.getAttribute("user"));
 			if (currentUser == null) {
 				response.sendRedirect("error");
-			} else {
+			} else { */
 		%>
-		Hi,<%=currentUser.getFirst_name()%>
+		Hi,<% //currentUser.getFirst_name()%>
 		<%
-			}
+			//}
 		%>
 		
 	<nav class="navbar navbar-inverse">
@@ -484,6 +484,7 @@ $(document).contextmenu({
 	 
 	 /*start- click on project list item */
 	 $("#project_list:has(li)").on("click",".projectItem",function(e){
+		//test case json 
 		 testcase1={description:"des",prerequisite:"adas",test_step:[
 			                                                    {id:1,step:"asd"},{id:2,step:"asd2"}
 			                                                    ],outcome:"out",alternative:"al"};

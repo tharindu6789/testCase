@@ -39,8 +39,8 @@ public class TestCase implements java.io.Serializable {
 	@Column(name = "ALTERNATIVE")
 	private String alternative;
 	
-	
-	private Set<TestStep> test_step = new HashSet<TestStep>(0);
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "testcase")
+	private Set<TestStep> test_steps = new HashSet<TestStep>(0);
 	
 	
 	public int getId() {
@@ -53,12 +53,12 @@ public class TestCase implements java.io.Serializable {
 
 	
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "TEST_CASE")
+	
 	public Set<TestStep> getTestSteps() {
-		return this.test_step;
+		return this.test_steps;
 	}
 	
 	public void setTestSteps(Set<TestStep> test_steps) {
-		this.test_step = test_step;
+		this.test_steps = test_steps;
 	}
 }

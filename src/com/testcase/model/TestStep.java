@@ -21,7 +21,8 @@ public class TestStep implements java.io.Serializable{
 	@Column(name = "TEST_STEP_ID")
 	private int id;
 	
-	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn (name="TEST_CASE_ID",referencedColumnName="TEST_CASE_ID",nullable=false,unique=true)
 	private TestCase testcase;
 	
 	@Column(name = "TEST_STEP")
