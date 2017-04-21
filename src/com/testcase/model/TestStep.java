@@ -1,23 +1,27 @@
 package com.testcase.model;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
-public class TestStep {
+@Entity
+@Table(name = "TEST_STEP")
+public class TestStep implements java.io.Serializable{
 
-
+	
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "TEST_STEP_ID")
 	private int id;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "TEST_CASE_ID")
+	
 	private TestCase testcase;
 	
 	@Column(name = "TEST_STEP")

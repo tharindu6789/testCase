@@ -484,7 +484,7 @@ $(document).contextmenu({
 	 
 	 /*start- click on project list item */
 	 $("#project_list:has(li)").on("click",".projectItem",function(e){
-		 testcase={description:"des",prerequisite:"adas",test_step:[
+		 testcase1={description:"des",prerequisite:"adas",test_step:[
 			                                                    {id:1,step:"asd"},{id:2,step:"asd2"}
 			                                                    ],outcome:"out",alternative:"al"};
 			alert(testcase.description);

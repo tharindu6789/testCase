@@ -30,10 +30,10 @@ public class TestCaseServiceImpl implements TestCaseService{
 	@Override
 	public void update(TestCase testCase) {
 	TestCase entity= dao.findById(testCase.getId());
-	if(entity !=null){
+	if(entity !=null){/*
 	entity.setFunc_require(testCase.getFunc_require());
 	entity.setNon_func_require(testCase.getNon_func_require());
-	entity.setTest_suit_id(testCase.getTest_suit_id());
+	entity.setTest_suit_id(testCase.getTest_suit_id());*/
 }
 		
 	}

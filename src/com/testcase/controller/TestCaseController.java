@@ -61,9 +61,9 @@ public class TestCaseController {
             System.out.println("TestCase with id " + id + " not found");
             return new ResponseEntity<TestCase>(HttpStatus.NOT_FOUND);
         }       
-        current.setFunc_require(testCase.getFunc_require());
+       /* current.setFunc_require(testCase.getFunc_require());
         current.setNon_func_require(testCase.getNon_func_require());
-        current.setTest_suit_id(testCase.getTest_suit_id());
+        current.setTest_suit_id(testCase.getTest_suit_id());*/
         testCaseService.update(current);
         return new ResponseEntity<TestCase>(current, HttpStatus.OK);
     } 
