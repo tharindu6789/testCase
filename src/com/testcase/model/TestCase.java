@@ -1,25 +1,15 @@
 package com.testcase.model;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "TEST_CASE")
-public class TestCase implements java.io.Serializable {
+public class TestCase {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "TEST_CASE_ID")
 	private int id;
 	/*
@@ -39,8 +29,6 @@ public class TestCase implements java.io.Serializable {
 	@Column(name = "ALTERNATIVE")
 	private String alternative;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "testcase")
-	private Set<TestStep> test_steps = new HashSet<TestStep>(0);
 	
 	
 	public int getId() {
@@ -50,15 +38,39 @@ public class TestCase implements java.io.Serializable {
 	public void setId(int id) {
 		this.id = id;
 	}
+	
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getPrerequisite() {
+		return prerequisite;
+	}
+
+	public void setPrerequisite(String prerequisite) {
+		this.prerequisite = prerequisite;
+	}
+
+	public String getOutcome() {
+		return outcome;
+	}
+
+	public void setOutcome(String outcome) {
+		this.outcome = outcome;
+	}
+
+	public String getAlternative() {
+		return alternative;
+	}
+
+	public void setAlternative(String alternative) {
+		this.alternative = alternative;
+	}
+
 
 	
-	
-	
-	public Set<TestStep> getTestSteps() {
-		return this.test_steps;
-	}
-	
-	public void setTestSteps(Set<TestStep> test_steps) {
-		this.test_steps = test_steps;
-	}
 }

@@ -1,6 +1,8 @@
 package com.testcase.controller;
  
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,7 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.testcase.model.TestCase;
+import com.testcase.model.TestStep;
 import com.testcase.service.TestCaseService;
+import com.testcase.service.TestStepService;
  
 @RestController
 public class TestCaseController {
@@ -22,6 +26,8 @@ public class TestCaseController {
     @Autowired
     TestCaseService testCaseService;  //Service which will do all data retrieval/manipulation work  
     
+    @Autowired
+    TestStepService testStepService; 
  
     //-------------------Retrieve All Users--------------------------------------------------------
     @RequestMapping(value = "/testCase/", method = RequestMethod.GET)
@@ -37,11 +43,43 @@ public class TestCaseController {
     @RequestMapping(value = "/testCase/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<TestCase> getUser(@PathVariable("id") int id) {
         System.out.println("Fetching User with id " + id);
-        TestCase testCase = testCaseService.findById(id);
-        if (testCase == null) {
-            System.out.println("User with id " + id + " not found");
-            return new ResponseEntity<TestCase>(HttpStatus.NOT_FOUND);
-        }
+       // TestCase testCase = testCaseService.findById(id);
+         TestCase testCase = new TestCase();
+         
+         testCase.setAlternative("alt");
+      	testCase.setDescription("asde");
+      	testCase.setOutcome("sda");
+      	testCase.setPrerequisite("pre");
+     	
+
+         
+         Set<TestStep> steps=new HashSet<TestStep>();
+         TestStep step1=new TestStep();
+         	step1.setTest_step("step1a");
+         	
+         	//step1.setTestcase(testCase);
+         	
+         	
+        // testStepService.save(step1);
+         
+         TestStep step2=new TestStep();
+         	step2.setTest_step("dsds");
+         	steps.add(step1);
+         	steps.add(step2);
+         	 
+         	//testStepService.save(step1);
+         	//testCase.getTest_steps().add(step1);
+         //	testCase.setTest_steps(steps);
+         	//testCaseService.save(testCase);
+         	testCaseService.saveCaseSteps(testCase, steps);
+
+         	
+         	
+         	
+         	      	
+         
+         
+         
         return new ResponseEntity<TestCase>(testCase, HttpStatus.OK);
     }     
     //-------------------Create a User--------------------------------------------------------

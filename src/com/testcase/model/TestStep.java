@@ -12,8 +12,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "TEST_STEP")
-public class TestStep implements java.io.Serializable{
-
+public class TestStep {
+	
+	public TestStep(){}
 	
 	
 	@Id
@@ -21,10 +22,10 @@ public class TestStep implements java.io.Serializable{
 	@Column(name = "TEST_STEP_ID")
 	private int id;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn (name="TEST_CASE_ID",referencedColumnName="TEST_CASE_ID",nullable=false,unique=true)
-	private TestCase testcase;
+	@Column(name = "TEST_CASE_ID")
+	private int test_case_id;
 	
+
 	@Column(name = "TEST_STEP")
 	private String test_step;
 	
@@ -36,14 +37,14 @@ public class TestStep implements java.io.Serializable{
 		this.id = id;
 	}
 
-	public TestCase getTestcase() {
-		return testcase;
+	
+	public int getTest_case_id() {
+		return test_case_id;
 	}
 
-	public void setTestcase(TestCase testcase) {
-		this.testcase = testcase;
+	public void setTest_case_id(int test_case_id) {
+		this.test_case_id = test_case_id;
 	}
-
 	public String getTest_step() {
 		return test_step;
 	}
