@@ -13,4 +13,6 @@ public interface TestSuiteDao {
 	void save(TestSuite testSuite);
 	
 	List<TestSuite> getAllData();
+	
+	public int getLastId();
 }

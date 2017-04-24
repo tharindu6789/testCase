@@ -11,4 +11,6 @@ public interface ProjectDao {
 	void save(Project project);
 	
 	List<Project> getAllData();
+	
+	public int getLastId();
 }

@@ -12,10 +12,9 @@ public class TestCase {
 	@Id
 	@Column(name = "TEST_CASE_ID")
 	private int id;
-	/*
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "TEST_SUITE_ID")
-	private TestSuite test_suit_id;*/
+	
+	@Column(name = "TEST_SUIT_ID")
+	private int test_suit_id;
 	
 	@Column(name = "DESCRIPTION")
 	private String description;
@@ -31,6 +30,14 @@ public class TestCase {
 	
 	
 	
+	public int getTest_suit_id() {
+		return test_suit_id;
+	}
+
+	public void setTest_suit_id(int test_suit_id) {
+		this.test_suit_id = test_suit_id;
+	}
+
 	public int getId() {
 		return id;
 	}
