@@ -63,7 +63,6 @@ public class TestCaseServiceImpl implements TestCaseService {
 
 	@Override
 	public void saveCaseSteps(TestCase testCase, Set<TestStep> testSteps) {
-		testCase.setId(dao.getLastId() + 1);
 		dao.save(testCase);
 		for (TestStep step : testSteps) {
 			step.setTest_case_id(testCase.getId());
@@ -71,11 +70,10 @@ public class TestCaseServiceImpl implements TestCaseService {
 		}
 	}
 	public void saveSuiteCases(TestSuite testSuite, Set<TestCase> testCases,Set<TestStep> testSteps) {
-		testSuite.setId(suitdao.getLastId() + 1);
 		suitdao.save(testSuite);
 		for (TestCase tcase : testCases) {
 			tcase.setTest_suit_id(testSuite.getId());
-			dao.save(tcase);
+			tcase.setId(dao.getLastId()+1);
 			saveCaseSteps(tcase, testSteps);
 		}
 	}
@@ -84,7 +82,7 @@ public class TestCaseServiceImpl implements TestCaseService {
 		projectdao.save(project);
 		for (TestSuite tsuite : testSuites) {
 			tsuite.setProject(project.getId());
-			suitdao.save(tsuite);
+			tsuite.setId(suitdao.getLastId()+1);
 			saveSuiteCases(tsuite, testCases,testSteps);
 		}
 	}

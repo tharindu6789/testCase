@@ -3,7 +3,7 @@
      <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
-<c:set var="baseURL" value="http://localhost:8080/TestCaseGenerator/"/>
+<c:set var="baseURL" value="http://localhost:8080/TestCaseGenProject/"/>
     <link rel="stylesheet" href="${baseURL}static/css/bootstrap.min.css">
 <script src="${baseURL}static/js/jquery.min.js"></script>
 <script src="${baseURL}static/js/bootstrap.min.js"></script>

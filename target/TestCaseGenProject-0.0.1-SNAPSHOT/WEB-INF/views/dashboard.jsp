@@ -95,7 +95,8 @@ table, th, td {
     border-radius:5px;
     display:inline-block;
     padding:3px 8px;
-    text-decoration:none
+    text-decoration:none;
+    font-size:12px;
 }
 .tree li.parent_li>span {
     cursor:pointer
@@ -149,14 +150,14 @@ footer {
 </head>
 <body>
 <%
-			User currentUser = (User) (session.getAttribute("user"));
+			/* User currentUser = (User) (session.getAttribute("user"));
 			if (currentUser == null) {
 				response.sendRedirect("error");
-			} else {
+			} else { */
 		%>
-		Hi,<%=currentUser.getFirst_name()%>
+		Hi,<% //currentUser.getFirst_name()%>
 		<%
-			}
+			//}
 		%>
 		
 	<nav class="navbar navbar-inverse">
@@ -179,7 +180,7 @@ footer {
 				<ul class="nav navbar-nav navbar-right">
 					<li><a href="#"><span class="glyphicon glyphicon-log-in"></span>
 							Login</a></li>
-					<li><a href="http://localhost:8080/TestCaseGenerator/logout/"><span class="glyphicon glyphicon-log-in"></span>
+					<li><a href="http://localhost:8080/TestCaseGenProject/logout/"><span class="glyphicon glyphicon-log-in"></span>
 							Logout</a></li>
 				</ul>
 			</div>
@@ -188,12 +189,12 @@ footer {
 
 	<div class="container-fluid ">
 		<div class="row content" style="height: 600px">
-			<div class="col-md-3 sidenav">
+			<div class="col-md-4 sidenav">
 				<div class="well">				
 					<p>My Projects</p>
 				</div>
 	    <div class="tree">
-    <ul id=project_list>
+    <ul id=project_list style="margin-left: -50px;">
         <li>
             <span class="hasmenu">Project 1</span>
             <ul>
@@ -220,7 +221,7 @@ footer {
 
 
 			</div>
-			<div class="col-sm-7">
+			<div class="col-md-6">
 				<div class="container-fluid">
 					<div class="well">
 						<button class="btn btn-primary" href="#modal" data-toggle="modal">Create</button>
@@ -244,7 +245,7 @@ footer {
 					</div>
 				</div>
 			</div>
-			<div class="col-sm-2 sidenav">
+			<div class="col-md-2 sidenav">
 				
 			</div>
 		</div>
@@ -366,7 +367,10 @@ function treeList() {
         }
        // e.stopPropagation();
     });
-    var children2 = $('.tree li.parent_li > span').parent('li.parent_li').find(' > ul > li');
+   
+}
+function hideTree(){
+	var children2 = $('.tree li.parent_li > span').parent('li.parent_li').find(' > ul > li');
 	 children2.hide('fast');
 }
 //right button click
@@ -455,7 +459,7 @@ $(document).contextmenu({
 
 
 
- var base_url="http://localhost:8080/TestCaseGenerator/";
+ var base_url="http://localhost:8080/TestCaseGenProject/";
  $(document).ready(function(){
 	 /* start-load projects from db */
 	 $.ajax({
@@ -474,11 +478,17 @@ $(document).contextmenu({
 				  
 			});
 			treeList();
+			hideTree();
 		}	 
 	 });/*end- load projects from db */
 	 
 	 /*start- click on project list item */
 	 $("#project_list:has(li)").on("click",".projectItem",function(e){
+		//test case json 
+		 testcase1={description:"des",prerequisite:"adas",test_step:[
+			                                                    {id:1,step:"asd"},{id:2,step:"asd2"}
+			                                                    ],outcome:"out",alternative:"al"};
+			alert(testcase.description);
 		 e.preventDefault();
 		 var current=this.id;
 		 var id=current.replace("P","");
@@ -521,9 +531,6 @@ $(document).contextmenu({
 $("#projectForm").submit(function(e){
 	e.preventDefault();
 	var formData=$(this).serialize();
-	
-	
-	
 	$.ajax({
 		type:'post',
 		url:base_url+'project/',
@@ -559,20 +566,63 @@ $.fn.serializeObject = function()
 /*start- click on project list item */
 $("body").on("click","#generateBtn",function(e){
 	 e.preventDefault();
-	
+	 var prerequites=[];
 	var id= $("#project_id").val();
+	 $.ajax({
+		 url:base_url+'testcase_rule/prerequisite/'+id,
+		 type:"GET",
+		 dataType:'json',
+		 contentType:'application/json',
+		 success:function(data){
+			 console.log(data);
+			 prerequites=data;
+			 loadModal(id,prerequites);
+		 }
+	 });
+	 
+	
+});
+
+function loadModal(id,prerequites){
+	
+	var prerequite=[];
+
+	var testcase_descriptions=[];
+	var alternatives=[];
+	var outcome=[];
+	
+	
+	$.get( base_url+"testcase_rule/tc_description/"+id, function( data ) {
+		$.each(data,function(i,obj){
+			testcase_descriptions.push(obj);
+		});
+	});
+	$.get( base_url+"testcase_rule/prerequisite/"+id, function( data ) {
+		$.each(data,function(i,obj){
+			prerequite.push(obj);
+		});
+	});
+	$.get( base_url+"testcase_rule/tc_alternative/"+id, function( data ) {
+		$.each(data,function(i,obj){
+			alternatives.push(obj);
+		});
+	});
+	$.get( base_url+"testcase_rule/tc_outcome/"+id, function( data ) {
+		$.each(data,function(i,obj){
+			outcome.push(obj);
+		});
+	});
 	 $.ajax({
 		 type:"GET",
 		 url:base_url+'project_testcase/'+id,
 		 dataType:'json',
 		 contentType:'application/json',
 		 success:function(data){
-				$("#testcase-modal").modal("show");
+				//$("#testcase-modal").modal("show");
 
 			 $("#test_body").empty(); // line added here
-			 alert(data[0]);
 			 var description=data[0][0];
-			 var prerequisite=data[0][1];
+			 //var prerequisite=data[0][1];
 			 var alternative=data[0][2];
 			 var expected_result=data[0][3];
 			 
@@ -580,9 +630,80 @@ $("body").on("click","#generateBtn",function(e){
 			 $("#prerequisite").text(prerequisite);
 			 $("#alternative").text(alternative);
 			 $("#expected_result").text(expected_result);
-			 var htm="<li><span><i class='icon-minus-sign'></i>Test Suite 1</span>"+
-	                  "<ul><li><span><i class='icon-leaf'></i> Test Case1</span></li></ul> </li>";
-			 $("#F"+id).append(htm);
+			 
+			 var test_suite="";
+			 $.ajax({
+				 url:base_url+'testcase_name/'+id,
+				 type:"GET",
+				 dataType:'json',
+				 contentType:'application/json',
+				 success:function(data2){
+						
+					/*  $.each(data2, function(i,obj) {// check prerequites comparison
+						 if(prerequites[0][0] === prerequites[i][0] ){
+						  //test_name+="<li><span><i class='icon-leaf'></i>"+obj+"</span></li>";
+						 }else{
+							 j.push(i);
+						 }
+					 }); */
+					 $.ajax({
+						 url:base_url+'testcase_description/'+id,
+						 type:"GET",
+						 dataType:'json',
+						 contentType:'application/json',
+						 success:function(data){
+							/*  if(j.length ==0){
+							var	test_suite=data[0];							
+							var htm="<li><span><i class='icon-minus-sign'></i>"+test_suite+"</span>"+
+			                 "<ul>"+test_name+"</ul> </li>";
+					 		$("#F"+id).append(htm); 
+							 } else{  */
+								 var htm="";
+								
+										var	test_name="";
+										var j=[];
+									 $.each(data2, function(i,obj2) {// check prerequites comparison
+										 if(prerequites[0][0] === prerequites[i][0] ){
+										  test_name+="<li><span><i class='icon-leaf'></i>"+obj2+"</span></li>";
+										 }else{
+											 j.push(i);
+										 }
+									 });
+									 htm="<li><span><i class='icon-minus-sign'></i>"+data[0]+"</span>"+
+					                 "<ul>"+test_name+"</ul> </li>";
+									// alert(j.length !==0);
+									 if(j.length !==0){
+										 test_name="";
+										 $.each(j,function(i,obj){
+											 if(prerequites[obj][0] === prerequites[i][0] ){
+												 test_name+="<li><span><i class='icon-leaf'></i>"+data2[i]+"</span></li>";
+												 htm+="<li><span><i class='icon-minus-sign'></i>"+data[i]+"</span>"+
+								                 "<ul>"+test_name+"</ul> </li>";
+											 }else{
+												 test_name+="<li><span><i class='icon-leaf'></i>"+data2[obj]+"</span></li>";
+												 htm+="<li><span><i class='icon-minus-sign'></i>"+data[obj]+"</span>"+
+								                 "<ul>"+test_name+"</ul> </li>"; 
+											 }
+											 
+										 });
+										
+										 
+									 }else{
+										
+									 }
+									 $("#F"+id).append("<ul>"+htm+"</ul>");	
+								 
+						 		
+
+							// }
+						 }
+					 });
+				 }
+			 });
+			 
+			
+			 //treeList();
+			 
 			for(i=4; i<data[0].length;i++){
 				$("#test_body").append("<tr><td>"+Number(i-3)+"</td><td>"+data[0][i]+"</td>");
 			}
@@ -590,7 +711,7 @@ $("body").on("click","#generateBtn",function(e){
 			
 		 }
 	 });
-});
+}
 /*end- click on project list item */
 </script>
 </html>

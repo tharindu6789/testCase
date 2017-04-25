@@ -20,6 +20,6 @@
 			}
 		%>
 		
-		<a href="http://localhost:8080/TestCaseGenerator/logout/">Logout</a>
+		<a href="http://localhost:8080/TestCaseGenProject/logout/">Logout</a>
 </body>
 </html>

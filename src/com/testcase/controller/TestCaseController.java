@@ -76,7 +76,7 @@ public class TestCaseController {
 		testCase.setPrerequisite("pre");
 		
 		Set<TestCase> tcases = new HashSet<TestCase>();
-
+			tcases.add(testCase);
 		Set<TestStep> steps = new HashSet<TestStep>();
 		TestStep step1 = new TestStep();
 		step1.setTest_step("step1a");
@@ -103,9 +103,26 @@ public class TestCaseController {
 	// -------------------Create a
 	// User--------------------------------------------------------
 	@RequestMapping(value = "/testCase/", method = RequestMethod.POST)
-	public ResponseEntity<Void> createUser(@RequestBody TestCase testCase, UriComponentsBuilder ucBuilder) {
-		System.out.println("Creating Testsuite " + testCase.getId());
-		testCaseService.save(testCase);
+	public ResponseEntity<Void> createUser(@RequestBody Project project,@RequestBody Set<TestSuite> testSuites,
+											@RequestBody Set<TestCase> testCases,
+											@RequestBody Set<TestStep> testSteps,UriComponentsBuilder ucBuilder) {
+		System.out.println("Creating Testsuite " + project.getId());
+		
+		
+		return new ResponseEntity<Void>(HttpStatus.CREATED);
+	}
+	@RequestMapping(value = "/testCase1/", method = RequestMethod.POST)
+	public ResponseEntity<Void> createUser(@RequestBody Project project,UriComponentsBuilder ucBuilder) {
+		System.out.println("Creating Testsuite " + project.getId());
+		
+		
+		return new ResponseEntity<Void>(HttpStatus.CREATED);
+	}
+	@RequestMapping(value = "/testCase2/", method = RequestMethod.POST)
+	public ResponseEntity<Void> createUser2(@RequestBody List<TestSuite> testSuites,UriComponentsBuilder ucBuilder) {
+		System.out.println("Creating Testsuite " + testSuites);
+		
+		
 		return new ResponseEntity<Void>(HttpStatus.CREATED);
 	}
 
