@@ -110,8 +110,14 @@ public class Prerequisite_constant {
 		
 	}
 		
+	
+	
+	
+	
 	public static Map<String,Integer> predefinedPriority(){// rule4 & 5 (before & after) (Grammar rule priority)
 	final Map<String,Integer> predefinedMap = new HashMap<String, Integer>();
+	
+	
 	
 	predefinedMap.put("Must/VB", 1);  // prerequisite is predefined verb(VB)
 	predefinedMap.put("Must/VBD", 1);  

@@ -231,6 +231,7 @@ footer {
 						<button class="btn btn-warning" id="generateBtn">Generate</button>
 						<button class="btn btn-danger">Delete</button>
 						<button class="btn btn-info">Help</button>
+						<button class="btn btn-default">Test Step Predictor</button>
 					</div>
 					<div class="well">
 					<form id="requirement_form">
@@ -488,7 +489,6 @@ $(document).contextmenu({
 		 testcase1={description:"des",prerequisite:"adas",test_step:[
 			                                                    {id:1,step:"asd"},{id:2,step:"asd2"}
 			                                                    ],outcome:"out",alternative:"al"};
-			alert(testcase.description);
 		 e.preventDefault();
 		 var current=this.id;
 		 var id=current.replace("P","");

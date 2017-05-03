@@ -1,5 +1,6 @@
 package com.testcase.controller;
 
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -15,6 +16,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.testcase.model.Project;
 import com.testcase.model.TestCase;
 import com.testcase.model.TestStep;
@@ -103,7 +109,17 @@ public class TestCaseController {
 	// -------------------Create a
 	// User--------------------------------------------------------
 	@RequestMapping(value = "/testCase/", method = RequestMethod.POST)
-	public ResponseEntity<Void> createUser(@RequestBody Project project,@RequestBody Set<TestSuite> testSuites,
+	public ResponseEntity<Void> create(@RequestBody String json,UriComponentsBuilder ucBuilder) throws JsonProcessingException, IOException {
+		System.out.println("JSON:" + json);
+		ObjectMapper mapper = new ObjectMapper();
+		JsonNode node = mapper.readTree(json);
+		Project proj=new Project();
+		proj=mapper.convertValue(node.get("project"), Project.class);
+		
+		return new ResponseEntity<Void>(HttpStatus.CREATED);
+	}
+	@RequestMapping(value = "/testCase34/", method = RequestMethod.POST)
+	public ResponseEntity<Void> createUser34(@RequestBody Project project,@RequestBody Set<TestSuite> testSuites,
 											@RequestBody Set<TestCase> testCases,
 											@RequestBody Set<TestStep> testSteps,UriComponentsBuilder ucBuilder) {
 		System.out.println("Creating Testsuite " + project.getId());
@@ -112,9 +128,12 @@ public class TestCaseController {
 		return new ResponseEntity<Void>(HttpStatus.CREATED);
 	}
 	@RequestMapping(value = "/testCase1/", method = RequestMethod.POST)
-	public ResponseEntity<Void> createUser(@RequestBody Project project,UriComponentsBuilder ucBuilder) {
-		System.out.println("Creating Testsuite " + project.getId());
-		
+	public ResponseEntity<Void> createUser(@RequestBody String project,UriComponentsBuilder ucBuilder) throws JsonParseException, JsonMappingException, IOException {
+		System.out.println("Creating Testsuite " + project);
+		ObjectMapper mapper = new ObjectMapper();
+		JsonNode node = mapper.readTree(project);
+		Project proj=new Project();
+		proj=mapper.convertValue(node.get("project"), Project.class);
 		
 		return new ResponseEntity<Void>(HttpStatus.CREATED);
 	}
