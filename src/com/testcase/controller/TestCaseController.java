@@ -1,6 +1,7 @@
 package com.testcase.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -18,9 +19,11 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.testcase.model.Project;
 import com.testcase.model.TestCase;
 import com.testcase.model.TestStep;
@@ -73,16 +76,16 @@ public class TestCaseController {
 
 		Set<TestSuite> suites = new HashSet<TestSuite>();
 		suites.add(suite);
-		
+
 		TestCase testCase = new TestCase();
 
 		testCase.setAlternative("alt");
 		testCase.setDescription("asde");
 		testCase.setOutcome("sda");
 		testCase.setPrerequisite("pre");
-		
+
 		Set<TestCase> tcases = new HashSet<TestCase>();
-			tcases.add(testCase);
+		tcases.add(testCase);
 		Set<TestStep> steps = new HashSet<TestStep>();
 		TestStep step1 = new TestStep();
 		step1.setTest_step("step1a");
@@ -100,8 +103,7 @@ public class TestCaseController {
 		// testCase.getTest_steps().add(step1);
 		// testCase.setTest_steps(steps);
 		// testCaseService.save(testCase);
-		testCaseService.saveProjectSuites(project, suites,tcases,steps);
-		
+		testCaseService.saveProjectSuites(project, suites, tcases, steps);
 
 		return new ResponseEntity<TestCase>(testCase, HttpStatus.OK);
 	}
@@ -109,39 +111,53 @@ public class TestCaseController {
 	// -------------------Create a
 	// User--------------------------------------------------------
 	@RequestMapping(value = "/testCase/", method = RequestMethod.POST)
-	public ResponseEntity<Void> create(@RequestBody String json,UriComponentsBuilder ucBuilder) throws JsonProcessingException, IOException {
+	public ResponseEntity<Void> create(@RequestBody String json, UriComponentsBuilder ucBuilder)
+			throws JsonProcessingException, IOException {
 		System.out.println("JSON:" + json);
 		ObjectMapper mapper = new ObjectMapper();
 		JsonNode node = mapper.readTree(json);
-		Project proj=new Project();
-		proj=mapper.convertValue(node.get("project"), Project.class);
-		
+		Project proj = new Project();
+		proj = mapper.convertValue(node.get("project"), Project.class);
+
 		return new ResponseEntity<Void>(HttpStatus.CREATED);
 	}
+
 	@RequestMapping(value = "/testCase34/", method = RequestMethod.POST)
-	public ResponseEntity<Void> createUser34(@RequestBody Project project,@RequestBody Set<TestSuite> testSuites,
-											@RequestBody Set<TestCase> testCases,
-											@RequestBody Set<TestStep> testSteps,UriComponentsBuilder ucBuilder) {
+	public ResponseEntity<Void> createUser34(@RequestBody Project project, @RequestBody Set<TestSuite> testSuites,
+			@RequestBody Set<TestCase> testCases, @RequestBody Set<TestStep> testSteps,
+			UriComponentsBuilder ucBuilder) {
 		System.out.println("Creating Testsuite " + project.getId());
-		
-		
+
 		return new ResponseEntity<Void>(HttpStatus.CREATED);
 	}
+
 	@RequestMapping(value = "/testCase1/", method = RequestMethod.POST)
-	public ResponseEntity<Void> createUser(@RequestBody String project,UriComponentsBuilder ucBuilder) throws JsonParseException, JsonMappingException, IOException {
-		System.out.println("Creating Testsuite " + project);
+	public ResponseEntity<Void> updateProject(@RequestBody String project, UriComponentsBuilder ucBuilder)
+			throws JsonParseException, JsonMappingException, IOException {
+		System.out.println("string: " + project);
 		ObjectMapper mapper = new ObjectMapper();
 		JsonNode node = mapper.readTree(project);
-		Project proj=new Project();
-		proj=mapper.convertValue(node.get("project"), Project.class);
-		
+		Project proj = new Project();
+
+		proj = mapper.convertValue(node.get("project"), Project.class);
+		Set<TestSuite> testSuites = new HashSet<TestSuite>();
+		testSuites = mapper.readValue(node.get("test_suites").toString(), new TypeReference<Set<TestSuite>>() {
+		});
+		Set<TestCase> testCases = new HashSet<TestCase>();
+		testCases = mapper.readValue(node.get("test_cases").toString(), new TypeReference<Set<TestCase>>() {
+		});
+		Set<TestStep> testSteps = new HashSet<TestStep>();
+		testSteps = mapper.readValue(node.get("test_steps").toString(), new TypeReference<Set<TestStep>>() {
+		});
+		testCaseService.saveProjectSuites(proj, testSuites, testCases, testSteps);
+		System.out.println("testSuite:" + testSuites.toString());
 		return new ResponseEntity<Void>(HttpStatus.CREATED);
 	}
+
 	@RequestMapping(value = "/testCase2/", method = RequestMethod.POST)
-	public ResponseEntity<Void> createUser2(@RequestBody List<TestSuite> testSuites,UriComponentsBuilder ucBuilder) {
+	public ResponseEntity<Void> createUser2(@RequestBody List<TestSuite> testSuites, UriComponentsBuilder ucBuilder) {
 		System.out.println("Creating Testsuite " + testSuites);
-		
-		
+
 		return new ResponseEntity<Void>(HttpStatus.CREATED);
 	}
 

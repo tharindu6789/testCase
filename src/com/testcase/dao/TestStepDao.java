@@ -5,4 +5,5 @@ import com.testcase.model.TestStep;
 public interface TestStepDao {
 
 	void save(TestStep testStep);
+	public int getLastId();
 }

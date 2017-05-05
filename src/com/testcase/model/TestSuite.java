@@ -35,8 +35,8 @@ public class TestSuite {
 		return project_id;
 	}
 
-	public void setProject(int project) {
-		this.project_id = project;
+	public void setProject(int project_id) {
+		this.project_id = project_id;
 	}
 
 	public String getTest_suit_name() {

@@ -66,6 +66,7 @@ public class TestCaseServiceImpl implements TestCaseService {
 		dao.save(testCase);
 		for (TestStep step : testSteps) {
 			step.setTest_case_id(testCase.getId());
+			step.setId(stepdao.getLastId());
 			stepdao.save(step);
 		}
 	}
