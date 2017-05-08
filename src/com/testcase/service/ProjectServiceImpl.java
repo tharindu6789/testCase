@@ -1,6 +1,5 @@
 package com.testcase.service;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -12,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.testcase.dao.ProjectDao;
 import com.testcase.model.Project;
-import com.testcase.model.User;
 
 @Service("projectService")
 @Transactional

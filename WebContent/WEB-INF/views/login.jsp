@@ -184,6 +184,9 @@ body {
                                     <div class="form-group">
                                        <input type="password" id="confirm-password" tabindex="2" class="form-control" placeholder="Confirm Password">
                                     </div>
+                                    <div >
+                                    <h5>${error}</h5>
+                                    </div>
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="col-sm-6 col-sm-offset-3">

@@ -41,10 +41,10 @@ public class UserRestController {
  		System.out.println(user);
  		if (user == null) {
  			session.setAttribute("error", "Email or Password is wrong!!!");
- 			return new ModelAndView("index");
+ 			return new ModelAndView("login");
  		}else if (user.getRole() == "") {
  			session.setAttribute("error", "This profile is deactivated by administrator");
- 			return new ModelAndView("index");
+ 			return new ModelAndView("login");
  		}
  		session.setAttribute("user", user);
  		return new ModelAndView("dashboard");

@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
 	public User authenticate(User user) {
 		User valid_user=findByEmail(user.getEmail());
 		
-			if (valid_user.getPassword().equals(user.getPassword())) {
+			if (valid_user != null && valid_user.getPassword().equals(user.getPassword())) {
 
 				return valid_user;
 			}
