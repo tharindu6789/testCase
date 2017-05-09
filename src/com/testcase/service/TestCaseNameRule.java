@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.testcase.constant.Outcome_constant;
+import com.testcase.constant.Prerequisite_constant;
+
 import opennlp.tools.cmdline.postag.POSModelLoader;
 import opennlp.tools.postag.POSModel;
 import opennlp.tools.postag.POSTagger;
@@ -51,15 +54,16 @@ public class TestCaseNameRule {
 
 				List<String> ruleList = new ArrayList<String>(Arrays.asList(
 
-						"achieve/VB"			
+						"achieve/VB","must/MD","may/MD","mustn’t/NN","should/MD","shouldn't/NN","can/MD","can’t/NN","could/MD","couldn’t/NN","has/VBZ",					
+						"hasn’t/NN","have/VBP","haven't/NN","will/VB","won’t/NN","would/MD","wouldn’t/NN","achieve/VB","achieves/VBZ",
+						"achieving/VBG","achieved/VBD","realize/VB","realizes/VBZ","realizing/VBG","realized/VBD","accomplish/VB",
+						"accomplishes/VBZ","accomplishing/VBG,accomplished/VBN","get/VB","gets/VBZ","getting/VBG","able/JJ","abled/VBD",				 
+						"unable/JJ","enable/VB","enabled/VBD","disable/VB","disabled/JJ","complete/JJ","completes/VBZ","completing/VBG",
+						"completed/VBD","incomplete/JJ","incompletes/NNS","success/NN","succeed/VB","succeeded/VBD",		    
+						"successful/JJ","successfully/RB"			
 									
 						));
-				List<String> predList = new ArrayList<String>(Arrays.asList(
-						"outcome/NN"
-
-
-					
-						));
+				List<String> predList = Outcome_constant.descList();
 				
 					String whitespaceTokenizerLine[] = WhitespaceTokenizer.INSTANCE.tokenize(sentence);
 					String[] tags = tagger.tag(whitespaceTokenizerLine);
@@ -108,16 +112,22 @@ public class TestCaseNameRule {
 								test_suite="";
 								
 							}else{
+								String first_tag=tags[i+1];
+								String first_word="_"+whitespaceTokenizerLine[i+1];
+								if(first_tag.equalsIgnoreCase("TO") || first_tag.equalsIgnoreCase("IN")){
+									first_word="";
+								}
 								if(i+4 < whitespaceTokenizerLine.length){
-									test_suite="TC_"+whitespaceTokenizerLine[i+1]+"_"+whitespaceTokenizerLine[i+2]+
+									
+									test_suite="TC"+first_word+"_"+whitespaceTokenizerLine[i+2]+
 									"_"+whitespaceTokenizerLine[i+3]+"_"+whitespaceTokenizerLine[i+4];	
 								}else
 								if(i+3 < whitespaceTokenizerLine.length){
-									test_suite="TC_"+whitespaceTokenizerLine[i+1]+"_"+whitespaceTokenizerLine[i+2]+
+									test_suite="TC"+first_word+"_"+whitespaceTokenizerLine[i+2]+
 									"_"+whitespaceTokenizerLine[i+3];	
 								}else
 								if(i+2 < whitespaceTokenizerLine.length){
-									test_suite="TC_"+whitespaceTokenizerLine[i+1]+"_"+whitespaceTokenizerLine[i+2];	
+									test_suite="TC"+first_word+"_"+whitespaceTokenizerLine[i+2];	
 								}
 							}
 						
