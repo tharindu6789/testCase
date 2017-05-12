@@ -1092,8 +1092,9 @@ color:rgb(76,152,216);
 														$("#F"+id).append(htm); 
 														 } else{  */
 														var htm = "";
-
+														var count=0;
 														var test_name = "";
+														var spanId="id='tc"+id+count+"'";
 														var j = [];
 														$
 																.each(
@@ -1102,9 +1103,10 @@ color:rgb(76,152,216);
 																				i,
 																				obj2) {// check prerequites comparison
 																			if (prerequites[0][0] === prerequites[i][0]) {
-																				test_name += "<li><span><i class='icon-leaf'></i>"
+																				test_name += "<li><span "+spanId+" class='tcItem'><i class='icon-leaf'></i>"
 																						+ obj2
 																						+ "</span></li>";
+																						count++;
 																			} else {
 																				j
 																						.push(i);
@@ -1126,17 +1128,18 @@ color:rgb(76,152,216);
 																					i,
 																					obj) {
 																				if (prerequites[obj][0] === prerequites[i][0]) {
-																					test_name += "<li><span><i class='icon-leaf'></i>"
+																					test_name += "<li><span "+spanId+" class='tcItem'><i class='icon-leaf '></i>"
 																							+ data2[i]
 																							+ "</span></li>";
-																					htm += "<li><span><i class='icon-minus-sign'></i>"
+																					htm += "<li><span><i class='icon-minus-sign '></i>"
 																							+ data[i]
 																							+ "</span>"
 																							+ "<ul>"
 																							+ test_name
 																							+ "</ul> </li>";
+																							count++;
 																				} else {
-																					test_name += "<li><span><i class='icon-leaf'></i>"
+																					test_name += "<li><span "+spanId+" class='tcItem'><i class='icon-leaf'></i>"
 																							+ data2[obj]
 																							+ "</span></li>";
 																					htm += "<li><span><i class='icon-minus-sign'></i>"
@@ -1145,6 +1148,7 @@ color:rgb(76,152,216);
 																							+ "<ul>"
 																							+ test_name
 																							+ "</ul> </li>";
+																							count++;
 																				}
 
 																			});
@@ -1180,6 +1184,11 @@ color:rgb(76,152,216);
 		//$("#testcase-modal-login").modal('show');
 		//$("#testcase-modal-load-mail").modal('show');
 		$("#testcase-modal-signup").modal('show');
+	});
+	
+	$("#project_list:has(li)").on("click",".tcItem",function(){
+		alert(this.id);
+		$("#testcase-modal").modal("show");
 	});
 </script>
 </html>

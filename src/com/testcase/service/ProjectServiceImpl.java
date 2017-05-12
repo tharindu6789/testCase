@@ -26,6 +26,7 @@ public class ProjectServiceImpl implements ProjectService{
 
 	@Override
 	public void save(Project project) {
+		project.setId(dao.getLastId() + 1);
 dao.save(project);		
 	}
 
