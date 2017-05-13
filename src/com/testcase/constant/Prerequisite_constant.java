@@ -10,15 +10,15 @@ public class Prerequisite_constant {
 	public static List<String> predeifnedList(){
 		
 		List<String> x = new ArrayList<String>(Arrays.asList(
-				"Prerequisite/VB", "prerequisite/NNP","pre-requisite/NN"				
-				,"prerequisites/NN","prerequisiting/NN","prerequisiting/VBG",
+				"Prerequisite/VB", "prerequisite/NN","pre-requisite/NN",			
+				"prerequisites/NN","prerequisiting/NN","prerequisiting/VBG",
 				"pre-requisiting/NN","precondition/NN","preconditions/NNS","preconditioning/NN","preconditioning/VBG",
 				"pre-condition/NN","pre-conditions/NNS","pre-conditioning/NN","prerequire/NN","prerequires/NN","prerequiring/NN",
 				"prerequired/NN","pre-require/NN","pre-requires/NN","pre-requiring/NN","pre-required/NN","predefine/NN",
 				"predefines/NN","predefining/NN","predefined/NN","pre-define/NN","pre-defines/NN","pre-defining/NN",
 				"pre-defined/NN","predescribe/NN","predescribes/NN","predescribing/NN","predescribed/NN","pre-describe/NN",
 				"pre-describes/NN","pre-describing/NN","pre-described/NN","Must/MD","must/MD","Might/MD","might/MD",
-				"may/MD","Should/MD","should/MD","Shall/MD","shall/MD","Already/RB","already/RB","Before/IN","before/IN",
+				"may/MD","Shall/MD","shall/MD","Already/RB","already/RB","Before/IN","before/IN",
 				"requisite/JJ","requisites/NNS","Requisiting/NN","requisiting/VBG","requisited/VBD","require/VB","require/VBP",
 				"requires/VBZ","requiring/VBG","Mandatory/JJ","mandatory/JJ","Need/NN","need/VBP",
 				"Needs/NNS","needs/VBZ","Needed/VBN","needed/VBP","Essential/JJ","essential/JJ","Essentials/NNS","essentials/NNS"

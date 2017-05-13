@@ -381,7 +381,7 @@ color:rgb(76,152,216);
 	<!--test suite modal END  -->
 
 	<!-- TEst suite Modal 1 START -->
-	<div id="testcase-modal2" class="modal fade" aria-hidden="false">
+	<div id="testcase-modalpredic" class="modal fade" aria-hidden="false">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-body">
@@ -1006,7 +1006,7 @@ color:rgb(76,152,216);
 				console.log(data);
 				prerequites = data;
 				loadModal(id, prerequites);
-			}
+			}	
 		});
 
 	});
@@ -1024,11 +1024,11 @@ color:rgb(76,152,216);
 				testcase_descriptions.push(obj);
 			});
 		});
-		$.get(base_url + "testcase_rule/prerequisite/" + id, function(data) {
+		/* $.get(base_url + "testcase_rule/prerequisite/" + id, function(data) {
 			$.each(data, function(i, obj) {
 				prerequite.push(obj);
 			});
-		});
+		}); */
 		$.get(base_url + "testcase_rule/tc_alternative/" + id, function(data) {
 			$.each(data, function(i, obj) {
 				alternatives.push(obj);
@@ -1046,38 +1046,37 @@ color:rgb(76,152,216);
 					dataType : 'json',
 					contentType : 'application/json',
 					success : function(data) {
-						$("#testcase-modal").modal("show");
+						$.each(data,function(index,obj){
+							var modal_id=index;
+							modalgenerate(modal_id);
+							$("#test_body"+modal_id).empty(); // line added here
+							var description = data[modal_id][0];
+							var prerequisite=data[modal_id][1];
+							var alternative = data[modal_id][2];
+							var expected_result = data[modal_id][3];
 
-						$("#test_body").empty(); // line added here
-						var description = data[0][0];
-						var prerequisite=data[0][1];
-						var alternative = data[0][2];
-						var expected_result = data[0][3];
-
-						$("#description").text(description);
-						$("#prerequisite").text(prerequisite);
-						$("#alternative").text(alternative);
-						$("#expected_result").text(expected_result);
+							$("#description"+modal_id).text(description);
+							$("#prerequisite"+modal_id).text(prerequisite);
+							$("#alternative"+modal_id).text(alternative);
+							$("#expected_result"+modal_id).text(expected_result);
+							$("#testcase-modal"+modal_id).modal('show');
+							for (i = 4; i < data[modal_id].length; i++) {
+								$("#test_body"+modal_id).append(
+										"<tr><td>" + Number(i - 3) + "</td><td>"
+												+ data[modal_id][i] + "</td>");
+							}
+						});
+						
 
 						var test_suite = "";
-						$
-								.ajax({
+						$.ajax({
 									url : base_url + 'testcase_name/' + id,
 									type : "GET",
 									dataType : 'json',
 									contentType : 'application/json',
 									success : function(data2) {
 										console.log(data2);
-
-										/*  $.each(data2, function(i,obj) {// check prerequites comparison
-											 if(prerequites[0][0] === prerequites[i][0] ){
-											  //test_name+="<li><span><i class='icon-leaf'></i>"+obj+"</span></li>";
-											 }else{
-												 j.push(i);
-											 }
-										 }); */
-										$
-												.ajax({
+										$.ajax({
 													url : base_url
 															+ 'testcase_description/'
 															+ id,
@@ -1085,23 +1084,18 @@ color:rgb(76,152,216);
 													dataType : 'json',
 													contentType : 'application/json',
 													success : function(data) {
-														/*  if(j.length ==0){
-														var	test_suite=data[0];							
-														var htm="<li><span><i class='icon-minus-sign'></i>"+test_suite+"</span>"+
-														 "<ul>"+test_name+"</ul> </li>";
-														$("#F"+id).append(htm); 
-														 } else{  */
+														
 														var htm = "";
 														var count=0;
 														var test_name = "";
 														var spanId="id='tc"+id+count+"'";
 														var j = [];
-														$
-																.each(
+														$.each(
 																		data2,
 																		function(
 																				i,
 																				obj2) {// check prerequites comparison
+																			console.log("PRE:"+prerequites[0][0]);
 																			if (prerequites[0][0] === prerequites[i][0]) {
 																				test_name += "<li><span "+spanId+" class='tcItem'><i class='icon-leaf'></i>"
 																						+ obj2
@@ -1169,14 +1163,11 @@ color:rgb(76,152,216);
 
 						//treeList();
 
-						for (i = 4; i < data[0].length; i++) {
-							$("#test_body").append(
-									"<tr><td>" + Number(i - 3) + "</td><td>"
-											+ data[0][i] + "</td>");
-						}
 
 					}
 				});
+		
+		
 	}
 	/*end- click on project list item */
 	$("#predictor").click(function(e) {
@@ -1190,6 +1181,37 @@ color:rgb(76,152,216);
 		alert(this.id);
 		$("#testcase-modal").modal("show");
 	});
+	
+	function modalgenerate(id){
+		
+		var html="<div id='testcase-modal"+id+"' class='modal fade' aria-hidden='false'>"+
+		"<div class='modal-dialog'>"+
+		"<div class='modal-content'>"+
+			"<div class='modal-body'>"+
+				"<div class='row'>"+
+					"<div class='col-lg-12'>"+
+						"<h3 class='m-t-none m-b'>Test Case</h3>"+
+						"<b>Description :</b><span id='description"+id+"'></span><br />"+
+						"<br /> <b>Prerequisite :</b><span id='prerequisite"+id+"'></span> <br /><br />"+						
+						"<table style='border-style: solid;'>"+
+							"<thead><tr>"+
+									"<th>Step No</th>"+
+									"<th>Test Step</th>"+
+								"</tr>"+
+							"</thead>"+
+							"<tbody id='test_body"+id+"'>"+
+							"</tbody>"+
+						"</table>"+
+						"<br> <b>Alternatives Flow :</b><span id='alternative"+id+"'></span><br />"+
+						"<br /> <b>Expected Result :</b><span id='expected_result"+id+"'></span>"+
+					"</div>"+
+				"</div>"+
+			"</div>"+
+		"</div>"+
+	"</div>"+
+"</div>";
+
+$("body").append(html);
+	}
 </script>
 </html>
-

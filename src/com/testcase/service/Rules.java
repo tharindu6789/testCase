@@ -89,9 +89,7 @@ public class Rules {
 					SentenceModel model2 = new SentenceModel(is);
 					SentenceDetectorME sdetector = new SentenceDetectorME(model2);
 					String[] sentences = sdetector.sentDetect(paragraph);
-					for (String sentence : sentences) {
-						// System.out.println("Sentence : " + sentence);
-					}
+					
 					preList = new Rules().Rule1(sentences, tagger);
 
 					if (preList.size() > 1) {
@@ -140,7 +138,7 @@ public class Rules {
 						ruleList.add(sentence);
 					}
 				} else {
-					// System.out.println(word + ":" + tag);
+					 System.out.println("ELSE:"+word + ":" + tag);
 				}
 			}
 		}
@@ -164,7 +162,7 @@ public class Rules {
 			for (int i = 0; i < whitespaceTokenizerLine.length; i++) {
 				String word = whitespaceTokenizerLine[i].trim();
 				String tag = tags[i].trim();
-				System.out.println(word + "_" + tag);
+				//System.out.println(word + "_" + tag);
 				if (predefinedList.contains(word + "/" + tag)) {
 					if (freqs.containsKey(word.toLowerCase())) {
 						freqs.put(word.toLowerCase(), freqs.get(word.toLowerCase()) + 1);

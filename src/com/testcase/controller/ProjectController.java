@@ -106,43 +106,43 @@ public class ProjectController {
 		for (int i = 0; i < scenes.length; i++) {
 			ArrayList<String> testList = new ArrayList<String>();
 			System.out.println("scen" + i + ":" + scenes);
-			testList = projectService.GenerateTestCase(scenes[i]);// pass the
+			// pass the
 																	// spilt
 																	// paragraph
-
-			String description = "";
-			String prerequisite = "";
-			String altenative = "";
-			String expected_result = "";
-			String input = current.getFunc_require();
+			String new_para=scenes[i];
+			String description = projectService.getTCByRule2("tc_description", scenes[i]);
+			String prerequisite = projectService.getTCByRule2("prerequisite", scenes[i]);
+			String altenative = projectService.getTCByRule2("tc_alternative", scenes[i]);
+			String expected_result = projectService.getTCByRule2("tc_outcome", scenes[i]);
+			
+			String input = scenes[i];
 			String paragraph[] = input.split("\\.");
+			
+			String[] split1 = description.split("BBB");
+			String[] split2 = prerequisite.split("BBB");
+			String[] split3 = altenative.split("BBB");
+			String[] split4 = expected_result.split("BBB");
+			
+			/*new_para=new_para.replace(description, "").replace(prerequisite, "")
+					.replace(altenative, "").replace(expected_result, "");*/
+			description = split1[1];
+			prerequisite = split2[1];
+			altenative = split3[1];
+			expected_result = split4[1];
 			for (String sent : paragraph) {
-				if (sent.contains("target")) {
-					sent = sent.replace("target", "BBB target");
-					String[] split = sent.split("BBB");
-					description = split[1];
-					testList.add(0, description);
-				}
-				if (sent.contains("prerequisite")) {
-					sent = sent.replace("prerequisite", "BBB prerequisite");
-					String[] split = sent.split("BBB");
-					prerequisite = split[1];
-					testList.add(1, prerequisite);
-				}
-				if (sent.contains("alternative")) {
-					sent = sent.replace("alternative", "BBB alternative");
-					String[] split = sent.split("BBB");
-					altenative = split[1];
-					testList.add(2, altenative);
-				}
-				if (sent.contains("outcome")) {
-					sent = sent.replace("outcome", "BBB outcome");
-					String[] split = sent.split("BBB");
-					expected_result = split[1];
-					testList.add(3, expected_result);
+				if (!sent.contains(description) && !sent.contains(prerequisite) && !sent.contains(altenative) 
+						&& !sent.contains(expected_result) ) {
+					
+					new_para+=sent+".";
 				}
 			}
-			System.out.println("TESTCASE" + i + testList);
+			testList = projectService.GenerateTestCase(new_para);
+			testList.add(0, description);
+			testList.add(1, prerequisite);
+			testList.add(2, altenative);
+			testList.add(3, expected_result);
+			
+			System.out.println("TESTCASE:>" + i + new_para);
 
 			Set<String> hs = new LinkedHashSet<>(testList);
 			// hs.addAll(testList);
