@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.StringReader;
 import java.util.ArrayList;
 
+import com.testcase.configuration.HibernateConfiguration;
 
 import opennlp.tools.cmdline.PerformanceMonitor;
 import opennlp.tools.cmdline.postag.POSModelLoader;
@@ -32,7 +33,7 @@ public class testNlp {
 	String entity;
 	public static ArrayList<String> TestSet = new ArrayList<String>();
 	public static ArrayList<String> ReqSet = new ArrayList<String>();
-	String path="D:\\Test case pro\\DesignPlus v1.4\\src\\";
+	static String path = HibernateConfiguration.path;
 	
 	
 	

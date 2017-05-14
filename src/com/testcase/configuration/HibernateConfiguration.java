@@ -21,7 +21,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @ComponentScan({ "com.testcase.configuration" })
 @PropertySource(value = { "classpath:application.properties" })
 public class HibernateConfiguration {
-
+	
+	public static String path="/Users/nipunaranasinghe/git/testCase2/resources/";
+	
     @Autowired
     private Environment environment;
 

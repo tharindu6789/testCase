@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.testcase.configuration.HibernateConfiguration;
 import com.testcase.constant.Outcome_constant;
 import com.testcase.constant.Prerequisite_constant;
 
@@ -19,7 +20,7 @@ import opennlp.tools.tokenize.WhitespaceTokenizer;
 public class TestCaseNameRule {
 	String DIR_PATH = "opennlp/";
 	String POS_MODEL_FILE = "en-pos-maxent.zip";
-	static String path = "D:\\Test case pro\\DesignPlus v1.4\\src\\";
+	static String path = HibernateConfiguration.path;
 
 	public String validateSentence( String sentence) {
 		String test_suite="";

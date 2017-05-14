@@ -125,10 +125,12 @@ public class ProjectController {
 			
 			/*new_para=new_para.replace(description, "").replace(prerequisite, "")
 					.replace(altenative, "").replace(expected_result, "");*/
+			if(description !="" && prerequisite != "" && altenative != "" && expected_result != ""){
 			description = split1[1];
 			prerequisite = split2[1];
 			altenative = split3[1];
 			expected_result = split4[1];
+			}
 			for (String sent : paragraph) {
 				if (!sent.contains(description) && !sent.contains(prerequisite) && !sent.contains(altenative) 
 						&& !sent.contains(expected_result) ) {

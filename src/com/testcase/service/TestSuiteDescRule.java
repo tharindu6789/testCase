@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.testcase.configuration.HibernateConfiguration;
+
 import opennlp.tools.cmdline.postag.POSModelLoader;
 import opennlp.tools.postag.POSModel;
 import opennlp.tools.postag.POSTagger;
@@ -16,7 +18,7 @@ import opennlp.tools.tokenize.WhitespaceTokenizer;
 public class TestSuiteDescRule {
 	String DIR_PATH = "opennlp/";
 	String POS_MODEL_FILE = "en-pos-maxent.zip";
-	static String path = "D:\\Test case pro\\DesignPlus v1.4\\src\\";
+	static String path = HibernateConfiguration.path;
 
 	public String validateSentence( String sentence) {
 		String test_suite="";

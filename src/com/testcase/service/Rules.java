@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.testcase.configuration.HibernateConfiguration;
 import com.testcase.constant.Alternative_constant;
 import com.testcase.constant.Outcome_constant;
 import com.testcase.constant.Prerequisite_constant;
@@ -23,7 +24,7 @@ import opennlp.tools.sentdetect.SentenceModel;
 import opennlp.tools.tokenize.WhitespaceTokenizer;
 
 public class Rules {
-	static String path = "D:\\Test case pro\\DesignPlus v1.4\\src\\";
+	static String path = HibernateConfiguration.path;
 	static List<String> predefinedList;
 	static Map<String, Integer> predifinedPriority;
 

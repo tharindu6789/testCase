@@ -16,10 +16,12 @@ import opennlp.tools.postag.POSTaggerME;
 import opennlp.tools.sentdetect.SentenceDetectorME;
 import opennlp.tools.sentdetect.SentenceModel;
 import opennlp.tools.tokenize.WhitespaceTokenizer;
+
+import com.testcase.configuration.HibernateConfiguration;
 import com.testcase.constant.Prerequisite_constant;
 public class PrerequisiteRules {
 	
-	static String path = "C:\\Users\\Admin\\git\\testCase\\resources\\";
+	static String path = HibernateConfiguration.path;
 	static Map<String, Integer> predefinedMap;
 	static Map<String, Integer> predefinedPriority;
 	static List<String> predList;
