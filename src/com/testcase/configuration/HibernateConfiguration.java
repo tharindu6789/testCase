@@ -22,7 +22,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @PropertySource(value = { "classpath:application.properties" })
 public class HibernateConfiguration {
 	
-	public static String path="/Users/nipunaranasinghe/git/testCase2/resources/";
+	//public static String path="/Users/nipunaranasinghe/git/testCase2/resources/";
+	public static String path="C:\\Users\\Admin\\git\\testCase\\resources\\";
 	
     @Autowired
     private Environment environment;

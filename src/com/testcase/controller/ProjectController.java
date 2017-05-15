@@ -109,7 +109,7 @@ public class ProjectController {
 			// pass the
 																	// spilt
 																	// paragraph
-			String new_para=scenes[i];
+			String new_para="";
 			String description = projectService.getTCByRule2("tc_description", scenes[i]);
 			String prerequisite = projectService.getTCByRule2("prerequisite", scenes[i]);
 			String altenative = projectService.getTCByRule2("tc_alternative", scenes[i]);
@@ -132,9 +132,21 @@ public class ProjectController {
 			expected_result = split4[1];
 			}
 			for (String sent : paragraph) {
-				if (!sent.contains(description) && !sent.contains(prerequisite) && !sent.contains(altenative) 
+				/*if (!sent.contains(description) && !sent.contains(prerequisite) && !sent.contains(altenative) 
 						&& !sent.contains(expected_result) ) {
 					
+					new_para+=sent+".";
+				}*/
+				sent+= ".";
+				if(sent.contains(description)){
+					
+				}else if(sent.contains(prerequisite)){
+					
+				}else if(sent.contains(altenative)){
+					
+				}else if(sent.contains(expected_result)){
+					
+				}else{
 					new_para+=sent+".";
 				}
 			}
