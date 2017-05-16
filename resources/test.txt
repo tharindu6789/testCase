@@ -1,0 +1,22 @@
+@relation TestCaseDescription
+
+@attribute PreDefinedWord {scenario, scenarios, target, targets, focus, focused, requirement, requirements, category, categories, phase, phases, function, functions, activity, activities, section, sections, segment , segments , segmenting, sector, sectors, partition, partitions, partitioning, purpose, purposes, unit, units, objective, objectives, perspective, perspectives, aspect, aspects, describe, describes , describing, described, about, base, based, aim, aims, aiming , aimed, point, points, pointing, pointed, provide, provides, providing, provided, appoint, appoints, appointing, appointed, concentrate, concentrates, concentrating, concentrated, concern, concerns, concerning, concerned, outline, outlines, outlining, outlined}
+@attribute PriorityValue {1,2,3,4,5,6,7,8}
+
+@data
+scenario,1 
+scenarios,1			                 
+target,2
+targets,2				    
+focus,3
+focused,3   			     
+requirement,4
+requirements,4		     	    
+category,5
+categories,5			     	
+phase,6
+phases,6			    	
+function,7
+functions,7			     	
+activity,8
+activities,8

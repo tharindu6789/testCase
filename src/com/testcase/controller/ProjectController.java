@@ -1,7 +1,6 @@
 package com.testcase.controller;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -18,9 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.testcase.model.Project;
+import com.testcase.service.PriorityTestService;
 import com.testcase.service.ProjectService;
-
-import opennlp.tools.sentdetect.SentenceDetectorME;
 
 @RestController
 public class ProjectController {
@@ -147,7 +145,7 @@ public class ProjectController {
 				}else if(sent.contains(expected_result)){
 					
 				}else{
-					new_para+=sent+".";
+					new_para+=sent;
 				}
 			}
 			testList = projectService.GenerateTestCase(new_para);
@@ -262,6 +260,14 @@ public class ProjectController {
 			tsList.add(sentence);
 		}
 		return new ResponseEntity<ArrayList<String>>(tsList, HttpStatus.OK);
+	}
+	@RequestMapping(value = "/testcase_priorty", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Void> getPriroityTest() throws Exception {
+		PriorityTestService priorityTest=new PriorityTestService();
+		
+		priorityTest.execute();
+		return null;
+		
 	}
 	
 }

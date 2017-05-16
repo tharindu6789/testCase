@@ -1088,7 +1088,7 @@ color:rgb(76,152,216);
 														var htm = "";
 														var count=0;
 														var test_name = "";
-														var spanId="id='tc"+id+count+"'";
+														var spanId="style='border-color:green; color: green;";
 														var j = [];
 														$.each(
 																		data2,
@@ -1096,6 +1096,16 @@ color:rgb(76,152,216);
 																				i,
 																				obj2) {// check prerequites comparison
 																			console.log("PRE:"+prerequites[0][0]);
+																				var negatives=['without','unable'];
+																				for(k=0;k<negatives.length;k++){
+																					if(obj2.indexOf(negatives[k]) !== -1){
+																						spanId="style='border-color:red; color: red;";
+																						break;
+																					}else{
+																						spanId="style='border-color:green; color: green;";
+																					}
+																				}
+																			
 																			if (prerequites[0][0] === prerequites[i][0]) {
 																				test_name += "<li><span "+spanId+" class='tcItem'><i class='icon-leaf'></i>"
 																						+ obj2
