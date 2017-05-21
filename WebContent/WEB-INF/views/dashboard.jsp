@@ -260,11 +260,13 @@ color:rgb(76,152,216);
 
 
 						<button class="btn btn-success" form="requirement_form">Save</button>
-						<button class="btn btn-warning" id="generateBtn">Generate</button>
-						<button class="btn btn-danger">Delete</button>
+						
 						<button class="btn btn-secondary">Help</button>
 						<button class="btn btn-info" id="predictor">Step Predictor</button>
 						<button class="btn btn-success" >Export Excel</button>
+						<button class="btn btn-danger">Delete</button><br><br>
+						<button class="btn btn-warning" id="generateBtn">Generate Func</button>
+						<button class="btn btn-warning" id="generateNonBtn">Generate Non-Func</button>
 					</div>
 					<div class="well">
 						<form id="requirement_form">
@@ -874,7 +876,7 @@ color:rgb(76,152,216);
 																		+ obj.projectName
 																		+ '</span>'
 																		+ '<ul><li id="F'+obj.id+'"><span><i class="icon-minus-sign"></i>Functional Testcases</span></li>'
-																		+ '<li><span><i class="icon-minus-sign"></i>Non Functional Testcases</span></li></ul>'
+																		+ '<li><span><i id="NF'+obj.id+'" class="icon-minus-sign"></i>Non Functional Testcases</span></li></ul>'
 																		+ '</li>';
 																$(
 																		"#project_list")
@@ -1222,6 +1224,196 @@ color:rgb(76,152,216);
 "</div>";
 
 $("body").append(html);
+	}
+	
+	
+	/*start- click on project list item */
+	$("body").on("click", "#generateNonBtn", function(e) {
+		e.preventDefault();
+		var prerequites = [];
+		var id = $("#project_id").val();
+		$.ajax({
+			url : base_url + 'testcase_rule_non/prerequisite/' + id,
+			type : "GET",
+			dataType : 'json',
+			contentType : 'application/json',
+			success : function(data) {
+				console.log(data);
+				prerequites = data;
+				loadModalNon(id, prerequites);
+			}	
+		});
+
+	});
+	
+
+	function loadModalNon(id, prerequites) {
+
+		var prerequite = [];
+
+		var testcase_descriptions = [];
+		var alternatives = [];
+		var outcome = [];
+
+		$.get(base_url + "testcase_rule_non/tc_description/" + id, function(data) {
+			$.each(data, function(i, obj) {
+				testcase_descriptions.push(obj);
+			});
+		});
+		/* $.get(base_url + "testcase_rule/prerequisite/" + id, function(data) {
+			$.each(data, function(i, obj) {
+				prerequite.push(obj);
+			});
+		}); */
+		$.get(base_url + "testcase_rule_non/tc_alternative/" + id, function(data) {
+			$.each(data, function(i, obj) {
+				alternatives.push(obj);
+			});
+		});
+		$.get(base_url + "testcase_rule_non/tc_outcome/" + id, function(data) {
+			$.each(data, function(i, obj) {
+				outcome.push(obj);
+			});
+		});
+		$
+				.ajax({
+					type : "GET",
+					url : base_url + 'project_testcase_non/' + id,
+					dataType : 'json',
+					contentType : 'application/json',
+					success : function(data) {
+						$.each(data,function(index,obj){
+							var modal_id=index;
+							modalgenerate(modal_id);
+							$("#test_body"+modal_id).empty(); // line added here
+							var description = data[modal_id][0];
+							var prerequisite=data[modal_id][1];
+							var alternative = data[modal_id][2];
+							var expected_result = data[modal_id][3];
+
+							$("#description"+modal_id).text(description);
+							$("#prerequisite"+modal_id).text(prerequisite);
+							$("#alternative"+modal_id).text(alternative);
+							$("#expected_result"+modal_id).text(expected_result);
+							$("#testcase-modal"+modal_id).modal('show');
+							for (i = 4; i < data[modal_id].length; i++) {
+								$("#test_body"+modal_id).append(
+										"<tr><td>" + Number(i - 3) + "</td><td>"
+												+ data[modal_id][i] + "</td>");
+							}
+						});
+						
+
+						var test_suite = "";
+						$.ajax({
+									url : base_url + 'testcase_name_non/' + id,
+									type : "GET",
+									dataType : 'json',
+									contentType : 'application/json',
+									success : function(data2) {
+										console.log(data2);
+										$.ajax({
+													url : base_url
+															+ 'testcase_description_non/'
+															+ id,
+													type : "GET",
+													dataType : 'json',
+													contentType : 'application/json',
+													success : function(data) {
+														
+														var htm = "";
+														var count=0;
+														var test_name = "";
+														var spanId="style='border-color:green; color: green;";
+														var j = [];
+														$.each(
+																		data2,
+																		function(
+																				i,
+																				obj2) {// check prerequites comparison
+																			console.log("PRE:"+prerequites[0][0]);
+																				var negatives=['without','unable'];
+																				for(k=0;k<negatives.length;k++){
+																					if(obj2.indexOf(negatives[k]) !== -1){
+																						spanId="style='border-color:red; color: red;";
+																						break;
+																					}else{
+																						spanId="style='border-color:green; color: green;";
+																					}
+																				}
+																			
+																			if (prerequites[0][0] === prerequites[i][0]) {
+																				test_name += "<li><span "+spanId+" class='tcItem'><i class='icon-leaf'></i>"
+																						+ obj2
+																						+ "</span></li>";
+																						count++;
+																			} else {
+																				j
+																						.push(i);
+																			}
+																		});
+														htm = "<li><span><i class='icon-minus-sign'></i>"
+																+ data[0]
+																+ "</span>"
+																+ "<ul>"
+																+ test_name
+																+ "</ul> </li>";
+														// alert(j.length !==0);
+														if (j.length !== 0) {
+															test_name = "";
+															$
+																	.each(
+																			j,
+																			function(
+																					i,
+																					obj) {
+																				if (prerequites[obj][0] === prerequites[i][0]) {
+																					test_name += "<li><span "+spanId+" class='tcItem'><i class='icon-leaf '></i>"
+																							+ data2[i]
+																							+ "</span></li>";
+																					htm += "<li><span><i class='icon-minus-sign '></i>"
+																							+ data[i]
+																							+ "</span>"
+																							+ "<ul>"
+																							+ test_name
+																							+ "</ul> </li>";
+																							count++;
+																				} else {
+																					test_name += "<li><span "+spanId+" class='tcItem'><i class='icon-leaf'></i>"
+																							+ data2[obj]
+																							+ "</span></li>";
+																					htm += "<li><span><i class='icon-minus-sign'></i>"
+																							+ data[obj]
+																							+ "</span>"
+																							+ "<ul>"
+																							+ test_name
+																							+ "</ul> </li>";
+																							count++;
+																				}
+
+																			});
+														} else {
+
+														}
+														$("#NF" + id)
+																.append(
+																		"<ul>"
+																				+ htm
+																				+ "</ul>");
+
+														// }
+													}
+												});
+									}
+								});
+
+						//treeList();
+
+
+					}
+				});
+		
+		
 	}
 </script>
 </html>

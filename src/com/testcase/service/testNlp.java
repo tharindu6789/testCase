@@ -47,6 +47,16 @@ public class testNlp {
 		
 	}
 	
+	public ArrayList<String> GenerateTestCaseNon(String paragraph) throws IOException{
+		ArrayList<String> TestCaseList = new ArrayList<String>();
+		testNlp.TestSet=new ArrayList<String>(); // Added this new line
+		new testNlp().RuleMapNonFunc(paragraph);
+		TestCaseList= testNlp.TestSet;
+		
+		return TestCaseList;
+		
+	}
+	
 public void RuleMap(String paragraph) throws IOException {
 	
 	String whitespaceTokenizerLine[];
@@ -445,7 +455,7 @@ public static void  Caseconstruct(String[] whitspc, String[] matchwrd,int[] matc
 
 
 
-public void RuleMapNonFunc(String paragraph, String textResult) throws IOException {
+public void RuleMapNonFunc(String paragraph) throws IOException {
 	
 	String whitespaceTokenizerLine[];
 	String Input = paragraph;
@@ -567,7 +577,7 @@ public void RuleMapNonFunc(String paragraph, String textResult) throws IOExcepti
 									System.out.println("found a match rule no#"+j);
 									found=true;
 									
-									CaseconstructNonFunc(whitespaceTokenizerLine,matchedWord,matches,j,textResult,"Verify that ");
+									CaseconstructNonFunc(whitespaceTokenizerLine,matchedWord,matches,j,"Verify that ");
 																	
 									break;
 								}
@@ -607,7 +617,7 @@ public void RuleMapNonFunc(String paragraph, String textResult) throws IOExcepti
 						System.out.println("found a match rule no#"+j);
 						found=true;
 						
-						CaseconstructNonFunc(whitespaceTokenizerLine,matchedWord,matches,j,textResult,"Verify that ");
+						CaseconstructNonFunc(whitespaceTokenizerLine,matchedWord,matches,j,"Verify that ");
 															
 						break;
 					}
@@ -633,7 +643,7 @@ public void RuleMapNonFunc(String paragraph, String textResult) throws IOExcepti
  }
 	
 		
-public static void  CaseconstructNonFunc(String[] whitspc, String[] matchwrd,int[] matchindx, int jj, String textResult , String addtext ) throws IOException {
+public static void  CaseconstructNonFunc(String[] whitspc, String[] matchwrd,int[] matchindx, int jj , String addtext ) throws IOException {
 
 	if(jj==0){
 	 	String wword="";

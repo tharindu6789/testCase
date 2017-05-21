@@ -165,6 +165,85 @@ public class ProjectController {
 
 		return new ResponseEntity<ArrayList<ArrayList<String>>>(testListAll, HttpStatus.OK);
 	}
+	@RequestMapping(value = "/project_testcase_non/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ArrayList<ArrayList<String>>> GenerateTestCaseNon(@PathVariable("id") int id) {
+		System.out.println("Generating Testcase " + id);
+		
+		Project current = new Project();
+		current = projectService.findById(id);
+		if (current == null) {
+			System.out.println("Project with id " + id + " not found");
+			return new ResponseEntity<ArrayList<ArrayList<String>>>(HttpStatus.NOT_FOUND);
+		}
+		String paragraphs = current.getNon_func_require();
+		String[] scenes = paragraphs.split("\\r?\\n");
+		
+		ArrayList<ArrayList<String>> testListAll = new ArrayList<ArrayList<String>>();
+		
+		for (int i = 0; i < scenes.length; i++) {
+			ArrayList<String> testList = new ArrayList<String>();
+			System.out.println("scen" + i + ":" + scenes);
+			// pass the
+			// spilt
+			// paragraph
+			String new_para="";
+			String description = projectService.getTCByRule2("tc_description", scenes[i]);
+			String prerequisite = projectService.getTCByRule2("prerequisite", scenes[i]);
+			String altenative = projectService.getTCByRule2("tc_alternative", scenes[i]);
+			String expected_result = projectService.getTCByRule2("tc_outcome", scenes[i]);
+			
+			String input = scenes[i];
+			String paragraph[] = input.split("\\.");
+			
+			String[] split1 = description.split("BBB");
+			String[] split2 = prerequisite.split("BBB");
+			String[] split3 = altenative.split("BBB");
+			String[] split4 = expected_result.split("BBB");
+			
+			/*new_para=new_para.replace(description, "").replace(prerequisite, "")
+					.replace(altenative, "").replace(expected_result, "");*/
+			if(description !="" && prerequisite != "" && altenative != "" && expected_result != ""){
+				description = split1[1];
+				prerequisite = split2[1];
+				altenative = split3[1];
+				expected_result = split4[1];
+			}
+			for (String sent : paragraph) {
+				/*if (!sent.contains(description) && !sent.contains(prerequisite) && !sent.contains(altenative) 
+						&& !sent.contains(expected_result) ) {
+					
+					new_para+=sent+".";
+				}*/
+				sent+= ".";
+				if(sent.contains(description)){
+					
+				}else if(sent.contains(prerequisite)){
+					
+				}else if(sent.contains(altenative)){
+					
+				}else if(sent.contains(expected_result)){
+					
+				}else{
+					new_para+=sent;
+				}
+			}
+			testList = projectService.GenerateTestCaseNon(new_para);
+			testList.add(0, description);
+			testList.add(1, prerequisite);
+			testList.add(2, altenative);
+			testList.add(3, expected_result);
+			
+			System.out.println("TESTCASE:>" + i + new_para);
+			
+			Set<String> hs = new LinkedHashSet<>(testList);
+			// hs.addAll(testList);
+			testList.clear();
+			testList.addAll(hs);
+			testListAll.add(testList);
+		}
+		
+		return new ResponseEntity<ArrayList<ArrayList<String>>>(testListAll, HttpStatus.OK);
+	}
 
 	@RequestMapping(value = "/testcase_prerequisite/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ArrayList<ArrayList<String>>> getPrerequisite(@PathVariable("id") int id) {
@@ -213,6 +292,21 @@ public class ProjectController {
 
 		return new ResponseEntity<ArrayList<ArrayList<String>>>(preListAll, HttpStatus.OK);
 	}
+	@RequestMapping(value = "/testcase_rule_non/{rule}/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ArrayList<ArrayList<String>>> getSentByRuleNon(@PathVariable("rule") String rule,@PathVariable("id") int id) {
+		System.out.println("get Prerequite" + id);
+		
+		Project current = new Project();
+		current = projectService.findById(id);
+		if (current == null) {
+			System.out.println("Project with id " + id + " not found");
+			return new ResponseEntity<ArrayList<ArrayList<String>>>(HttpStatus.NOT_FOUND);
+		}
+		String paragraphs = current.getNon_func_require();
+		ArrayList<ArrayList<String>> preListAll=projectService.getSentByRule(rule, paragraphs);
+		
+		return new ResponseEntity<ArrayList<ArrayList<String>>>(preListAll, HttpStatus.OK);
+	}
 	@RequestMapping(value = "/testcase_description/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ArrayList<String>> getTestSuiteName(@PathVariable("id") int id) {
 		System.out.println("get Prerequite" + id);
@@ -237,8 +331,35 @@ public class ProjectController {
 		}
 		return new ResponseEntity<ArrayList<String>>(tsList, HttpStatus.OK);
 	}
+	@RequestMapping(value = "/testcase_description_non/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ArrayList<String>> getTestSuiteNameNon(@PathVariable("id") int id) {
+		System.out.println("get Prerequite" + id);
+		
+		Project current = new Project();
+		current = projectService.findById(id);
+		if (current == null) {
+			System.out.println("Project with id " + id + " not found");
+			return new ResponseEntity<ArrayList<String>>(HttpStatus.NOT_FOUND);
+		}
+		String paragraphs = current.getNon_func_require();
+		ArrayList<ArrayList<String>> preListAll=projectService.getSentByRule("tc_description", paragraphs);
+		
+		System.out.println("preListAll:"+preListAll.toString());
+		ArrayList<String> tsList=new ArrayList<String>();
+		for(int i=0; i<preListAll.size(); i++){
+			ArrayList<String> list=preListAll.get(i);
+			if(list.size()>0){
+			String sentence= list.get(0);
+			System.out.println("PreSEnt:"+sentence);
+			
+			sentence=projectService.getTestSuiteDesc(sentence);
+			tsList.add(sentence);
+			}
+		}
+		return new ResponseEntity<ArrayList<String>>(tsList, HttpStatus.OK);
+	}
 	@RequestMapping(value = "/testcase_name/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ArrayList<String>> getTestCaseName(@PathVariable("id") int id) {
+	public ResponseEntity<ArrayList<String>> getTestCaseNameNon(@PathVariable("id") int id) {
 		System.out.println("get TestCaseName" + id);
 		
 		Project current = new Project();
@@ -248,6 +369,30 @@ public class ProjectController {
 			return new ResponseEntity<ArrayList<String>>(HttpStatus.NOT_FOUND);
 		}
 		String paragraphs = current.getFunc_require();
+		ArrayList<ArrayList<String>> preListAll=projectService.getSentByRule("tc_outcome", paragraphs);
+		
+		System.out.println(preListAll.get(0));
+		ArrayList<String> tsList=new ArrayList<String>();
+		for(int i=0; i<preListAll.size(); i++){
+			String sentence= preListAll.get(i).get(0);
+			System.out.println(sentence);
+			
+			sentence=projectService.getTestCaseName(sentence);
+			tsList.add(sentence);
+		}
+		return new ResponseEntity<ArrayList<String>>(tsList, HttpStatus.OK);
+	}
+	@RequestMapping(value = "/testcase_name_non/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ArrayList<String>> getTestCaseName(@PathVariable("id") int id) {
+		System.out.println("get TestCaseName" + id);
+		
+		Project current = new Project();
+		current = projectService.findById(id);
+		if (current == null) {
+			System.out.println("Project with id " + id + " not found");
+			return new ResponseEntity<ArrayList<String>>(HttpStatus.NOT_FOUND);
+		}
+		String paragraphs = current.getNon_func_require();
 		ArrayList<ArrayList<String>> preListAll=projectService.getSentByRule("tc_outcome", paragraphs);
 		
 		System.out.println(preListAll.get(0));

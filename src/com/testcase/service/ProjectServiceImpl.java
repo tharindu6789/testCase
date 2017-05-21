@@ -58,6 +58,19 @@ public class ProjectServiceImpl implements ProjectService {
 		}
 		return testCaseList;
 	}
+	@Override
+	public ArrayList<String> GenerateTestCaseNon(String paragraph) {
+		ArrayList<String> testCaseList = new ArrayList<String>();
+		
+		try {
+			testCaseList = new testNlp().GenerateTestCaseNon(paragraph);
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return testCaseList;
+	}
 
 	public ArrayList<String> getPrequisite(String paragraph) {
 		ArrayList<String> prelist = new ArrayList<String>();
